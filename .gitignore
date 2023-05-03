@@ -1,3 +1,9 @@
+# data folder
+data/
+
+# vscode specific stuff
+.vscode
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
