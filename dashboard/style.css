@@ -1,0 +1,63 @@
+/* html{
+    -ms-text-size-adjust:100%;
+	-webkit-text-size-adjust:100%;
+} */
+
+body{
+    font-family: "Open Sans", Helvetica, sans-serif;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+    background-color: #F5F8FC; 
+}
+
+/* Headers */
+h1{
+	font-size:36px
+}
+
+/* Paragraph */
+p {
+    font-size: 18px;
+}
+
+/* Dashboard views container */
+.container{
+    width:auto;
+	margin: 0px;
+}
+
+/* Grid for plots */
+.row{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	width: 100%;
+}
+
+.column{
+	display: flex;
+	flex-direction: column;
+	flex-basis: 100%;
+	flex: 1;
+}
+
+ /* Dashboard banner */
+.banner{
+	padding-top: 1px;
+	padding-bottom: 1px;
+	margin-bottom: 30px;
+    margin-left: 0px;
+    border-radius: 20px;
+	background-color:#BCE0DE;
+    text-align:center;
+}
+
+.banner p{
+	margin-bottom:10px;
+	font-size:23px;
+}
+
+
+
+
