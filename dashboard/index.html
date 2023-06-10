@@ -17,7 +17,14 @@
         <div class="row">
             <div class="column" id="left_col1">
                 <h2>Total cases from Nov 2020 to Oct 2022</h2>
-                <svg id="ul_svg"></svg>
+                <svg id="ul_svg">
+                    <!-- <g class="bg">
+                        <rect width="100%" height="100%" opacity="0"></rect>
+                        <g class="zoomed">
+                            <circle cx="0" cy="0" r="25%" fill="blue" />
+                        </g>
+                    </g> -->
+                </svg>
                 <script src="view_ul.js"></script>
             </div>
             <div class="column" id="right_col1">
@@ -27,10 +34,12 @@
             </div>
         </div>
         <div class="row">
-            <div class="column" id="left_col2">
+            <div class="column" id="left_col2" align="center">
                 <h2 id="corr_header">Total Infections vs. HDI</h2>
-                <svg id="bl_svg"></svg>
-                <select name="corr_variables" id="corr_variable">
+                <svg id="bl_svg"> <g></g> </svg>
+                
+                <script src="view_bl.js"></script>
+                <select name="corr_variables" id="corr_variable" align="centre">
                     <option value="human_development_index">HDI</option>
                     <option value="gdp_per_capita">GDP per Capita</option>
                     <option value="extreme_poverty">Extreme Poverty</option>
@@ -38,7 +47,6 @@
                     <option value="life_expectancy">Life Expectancy</option>
                     <option value="diabetes_prevalence">Diabetes Prevalence</option>
                 </select>
-
                 <script>
                     d3.select("#corr_variable").on("change", function() {
                         const selector_element = d3.select(this).node()
@@ -47,7 +55,6 @@
                           .text("Total Infections vs. " + new_var)
                     })
                 </script>
-                <script src="view_bl.js"></script>
             </div>
             <div class="column" id="right_col2">
                 <h2>Timeline of new vaccinations</h2>
