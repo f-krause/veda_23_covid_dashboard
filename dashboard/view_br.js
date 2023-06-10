@@ -1,3 +1,7 @@
+// ##################################
+// View bottom right: Line Chart Vaccinations
+// ##################################
+
 // https://datawanderings.com/2019/10/28/tutorial-making-a-line-chart-in-d3-js-v-5/
 
 // Load data
@@ -38,7 +42,7 @@ const y_padding = 0;
 
 const svg = d3.select("#br_svg")
               .attr("width", w)
-              .attr("height", h)
+              .attr("height", h - 80)
 
 
 // Add x axis

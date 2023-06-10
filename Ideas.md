@@ -1,10 +1,14 @@
 # Ideas & Nodes
 
 ## TODO
-- [ ] changes data on change of drop down
+- [ ] scatter plot "append" issue when changing data
+- [ ] svg size issue (longer than it should be)
+- [ ] scatter yScale issue (labels below axis)
 - [ ] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
 - [ ] introduce brushing/filter transition (d3_transitions.html of tutorial)
 - [ ] Introduce zoom and pan for map
+- [ ] Custom color scheme for linecharts
+- [ ] make Africa avg. line special (e.g. dashed)
 
 
 </br>
@@ -14,7 +18,7 @@
 - Plot titles, axis labels, legends
 - Include instructions  (?)
 - nice design
-- Always metric per population, e.g. vacc/cases per 1 mio (or eq)
+- Always metric per population size, e.g. vacc/cases per 1 mio (or eq)
 - GEODATA for AFRICA: https://gist.github.com/1310aditya/35b939f63d9bf7fbafb0ab28eb878388#file-africa-json
 - https://geojson-maps.ash.ms/
 

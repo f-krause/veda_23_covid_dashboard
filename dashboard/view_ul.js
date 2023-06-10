@@ -1,3 +1,7 @@
+// ##################################
+// View upper left: Map Total Cases
+// ##################################
+
 // Create svg
 const div = d3.select("#left_col1")
 const w = div._groups[0][0]["clientWidth"];
@@ -11,8 +15,8 @@ d3.json( "https://raw.githubusercontent.com/codeforgermany/click_that_hood/maste
 ).then(function (data) {
   
   let projection = d3.geoMercator()
-  //.fitExtent([[0, 0],[w, h],], data)
-  .scale(220) //scale：設定地圖縮放倍率
+  // .fitExtent([[0, 0],[w, h],], data)
+  .scale(220)
   .translate([w / 5, h / 2.3]);
   
   
@@ -26,15 +30,15 @@ d3.json( "https://raw.githubusercontent.com/codeforgermany/click_that_hood/maste
     .append('g')
     .attr("class", function(d){return d.properties.name; })
     .append("path")
-    .attr("fill", "#69b3a2")
+    .attr("fill", "#1F7A8C") // TODO fill according to cases
     .attr("d", geoGenerator)
     .style("stroke", "#fff")
-    // .on("mouseover", handleMouseOver)
+    // .on("mouseover", handleMouseOver) // FIXME BROKEN
     // .on("mouseout", function (d, i) {
     //   d3.select(this).transition().duration(300).attr("fill", "#69b3a2");
     //   d3.selectAll("text")
     //     .transition()
-    //     .delay(function(d, i) { return 100; })
+    //     .delay(function(d, i) {return 100; })
     //     .text("");
     // });
 

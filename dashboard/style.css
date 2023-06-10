@@ -7,7 +7,6 @@ body{
     font-family: "Open Sans", Helvetica, sans-serif;
     margin-left: 30px;
     margin-right: 30px;
-    margin-top: 0px;
     background-color: #F5F8FC; 
 }
 
@@ -17,17 +16,18 @@ h1{
 	font-size:36px;
 	padding: 0px;
     margin: 0px;
+	color: #F5F8FC;
 }
 
 h2{
 	padding: 0px;
     margin: 8px;
-	font-size:23px;
+	font-size:20px;
 	text-align:center;
 }
 
 /* Paragraph */
-p {
+p{
     font-size: 18px;
 }
 
@@ -52,9 +52,9 @@ p {
 	flex: 1;
 	width: 50%;
 	height: calc(50vh - 70px); /* TODO can be decreased but svg's are too long! */
-	background-color: rgb(222, 230, 241);
+	background-color: #e0ecee;
 	border-radius: 5px;
-	margin: 5px;
+	margin: 6px;
 }
 
 
@@ -79,9 +79,11 @@ p {
  /* Dashboard banner */
 .banner{
 	padding: 5px;
-	margin: 5px;
+	margin: 6px;
+	margin-top: 12px;
     border-radius: 5px;
-	background-color:#BCE0DE;
+	/* background-color:#BCE0DE; */
+	background-color:#1F7A8C;
     text-align:center;
 }
 
@@ -92,7 +94,7 @@ p {
 
 /* Drop down menu */
 #corr_variable{
-	font-size: 21px;;
+	font: inherit;
 	padding: 3px 8px;
 	border: 1px solid #ababab;
 	border-radius: 3px;
