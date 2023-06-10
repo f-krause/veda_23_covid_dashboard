@@ -29,7 +29,24 @@
         <div class="row">
             <div class="column" id="left_col2">
                 <h2 id="corr_header">Total Infections vs. HDI</h2>
-                <!-- <svg id="bl_svg"></svg> -->
+                <svg id="bl_svg"></svg>
+                <select name="corr_variables" id="corr_variable">
+                    <option value="human_development_index">HDI</option>
+                    <option value="gdp_per_capita">GDP per Capita</option>
+                    <option value="extreme_poverty">Extreme Poverty</option>
+                    <option value="handwashing_facilities">Handwashing Facilities</option>
+                    <option value="life_expectancy">Life Expectancy</option>
+                    <option value="diabetes_prevalence">Diabetes Prevalence</option>
+                </select>
+
+                <script>
+                    d3.select("#corr_variable").on("change", function() {
+                        const selector_element = d3.select(this).node()
+                        const new_var = selector_element.options[selector_element.options.selectedIndex].text
+                        d3.select("#corr_header")
+                          .text("Total Infections vs. " + new_var)
+                    })
+                </script>
                 <script src="view_bl.js"></script>
             </div>
             <div class="column" id="right_col2">
