@@ -144,9 +144,10 @@ function clickOn(event, d) {
 svg.append("text")
 .attr("class", "y label")
 .attr("text-anchor", "middle")
-.attr("x", -h/2)
+.attr("x", -h/2 -10)
 .attr("y", x_padding - 55)
 .attr("transform", "rotate(-90)")
+.attr("font-size", 14)
 .text("Smoothed new cases (per 1 mil.)"); // TODO
 
 });
