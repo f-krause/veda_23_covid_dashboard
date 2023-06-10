@@ -49,14 +49,17 @@ p {
   }
   
 .column {
-flex: 1;
-width: 50%;
-height: calc(50vh - 100px);
+	flex: 1;
+	width: 50%;
+	height: calc(50vh - 70px); /* TODO can be decreased but svg's are too long! */
+	background-color: rgb(222, 230, 241);
+	border-radius: 5px;
+	margin: 5px;
 }
 
 
 /* FOR TESTING */
-#left_col1{
+/* #left_col1{
 	background-color: rgb(237, 203, 213);
 }
 
@@ -64,22 +67,20 @@ height: calc(50vh - 100px);
 	background-color: rgb(241, 222, 227);
 }
 
-#right_col2{
-	background-color: rgb(222, 230, 241);
-}
-
 #left_col2{
 	background-color: rgb(200, 214, 233);
-}
+} 
+
+#right_col2{
+	background-color: rgb(222, 230, 241);
+} */
 
 
  /* Dashboard banner */
 .banner{
 	padding: 5px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-    margin-left: 0px;
-    border-radius: 15px;
+	margin: 5px;
+    border-radius: 5px;
 	background-color:#BCE0DE;
     text-align:center;
 }
@@ -91,8 +92,8 @@ height: calc(50vh - 100px);
 
 /* Drop down menu */
 #corr_variable{
-	font-size: 14px;;
-	padding: 8px 12px;
+	font-size: 21px;;
+	padding: 3px 8px;
 	border: 1px solid #ababab;
 	border-radius: 3px;
 	color: #333333;

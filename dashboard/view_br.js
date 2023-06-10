@@ -41,6 +41,21 @@ const svg = d3.select("#br_svg")
               .attr("height", h)
 
 
+// Add x axis
+const xScale = d3.scaleTime()
+                 .domain(d3.extent(data, function(d){return d.date}))
+                 .range([x_padding, w]);
+
+const xAxis = d3.axisBottom(xScale)
+                .tickFormat(d3.timeFormat('%d %b %y'))
+                //.ticks(d3.timeMonth.every(1))
+// xAxis.ticks().tickFormat((d, i) => d.toString())
+
+svg.append("g")
+    .attr("transform", "translate(0," + (h - y_padding) + ")")
+    .call(xAxis);
+
+
 // Add y axis
 const yScale = d3.scaleLinear()
                     .domain([0, d3.max(data.map(d => d.vacc))*1.05]) // increase max for aesthetics
@@ -51,22 +66,6 @@ const yAxis = d3.axisLeft(yScale);
 svg.append("g")
     .attr("transform", "translate(" + (x_padding) + ",0)")
     .call(yAxis);
-
-
-// Add x axis
-const xScale = d3.scaleTime()
-                    .domain(d3.extent(data, function(d){return d.date}))
-                    .range([x_padding, w]);
-
-const xAxis = d3.axisBottom(xScale)
-                .tickFormat(d3.timeFormat('%d %b %y'))
-                //.ticks(d3.timeMonth.every(1))
-
-// xAxis.ticks().tickFormat((d, i) => d.toString())
-
-svg.append("g")
-    .attr("transform", "translate(0," + (h - y_padding) + ")")
-    .call(xAxis);
 
 
 // Plot lines
@@ -134,24 +133,15 @@ function clickOn(event, d) {
 }
 
 
-// Add x axis label
-// svg.append("text")
-// .attr("class", "x label")
-// .attr("text-anchor", "end")
-// .attr("x", w/2)
-// .attr("y", h - y_padding + 45)
-// .text("Dates");
-
-
 // Add y axis label
 svg.append("text")
-.attr("class", "y label")
-.attr("text-anchor", "middle")
-.attr("x", -h/2 - 10)
-.attr("y", x_padding - 55)
-.attr("transform", "rotate(-90)")
-.attr("font-size", 14)
-.text("Smoothed new vaccinations (per 1 mil.)"); // TODO
+    .attr("class", "y label")
+    .attr("text-anchor", "middle")
+    .attr("x", -h/2 - 10)
+    .attr("y", x_padding - 55)
+    .attr("transform", "rotate(-90)")
+    .attr("font-size", 14)
+    .text("Smoothed new vaccinations (per 1 mil.)"); // TODO
 
 });
 

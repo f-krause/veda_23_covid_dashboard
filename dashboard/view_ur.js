@@ -37,7 +37,21 @@ const y_padding = 0;
 
 const svg = d3.select("#ur_svg")
               .attr("width", w)
-              .attr("height", h)
+              .attr("height", h);
+
+
+// Add x axis
+const xScale = d3.scaleTime()
+                 .domain(d3.extent(data, function(d){return d.date}))
+                 .range([x_padding, w]);
+
+const xAxis = d3.axisBottom(xScale)
+                .tickFormat(d3.timeFormat('%d %b %y'));
+                //.ticks(d3.timeMonth.every(1))
+
+svg.append("g")
+    .attr("transform", "translate(0," + (h - y_padding) + ")")
+    .call(xAxis);
 
 
 // Add y axis
@@ -52,20 +66,6 @@ svg.append("g")
     .call(yAxis);
 
 
-// Add x axis
-const xScale = d3.scaleTime()
-                    .domain(d3.extent(data, function(d){return d.date}))
-                    .range([x_padding, w]);
-
-const xAxis = d3.axisBottom(xScale)
-                .tickFormat(d3.timeFormat('%d %b %y'))
-                //.ticks(d3.timeMonth.every(1))
-
-svg.append("g")
-    .attr("transform", "translate(0," + (h - y_padding) + ")")
-    .call(xAxis);
-
-
 // Plot lines
 let line = d3.line()
     .x(function(d) {
@@ -77,7 +77,7 @@ let line = d3.line()
 
 var colorScale = d3.scaleOrdinal()
     .domain(countries)
-    .range(d3.schemeTableau10)
+    .range(d3.schemeTableau10);
 
 svg.append("g")
     .selectAll("path")
@@ -89,7 +89,7 @@ svg.append("g")
         .attr("d", d => line(d[1]))
         .on("click", clickOn)
         .on("mouseover", hoverOn)
-        .on("mouseout", hoverOff)
+        .on("mouseout", hoverOff);
 
 
 // Hover effect functions
@@ -97,7 +97,7 @@ function hoverOn(event, d) {
     d3.select(this)
         .transition().duration(80)
         .attr("stroke-width", 4.5)
-        .attr("stroke", "red")
+        .attr("stroke", "red");
 
     // svg.append("text")
     //     .text(d[0])
@@ -110,7 +110,7 @@ function hoverOff(event, d) {
     d3.select(this)
         .transition()
         .attr("stroke-width", 2)
-        .attr("stroke", colorScale(d[0]))
+        .attr("stroke", colorScale(d[0]));
 
     // svg.selectAll(".textBox").remove()
     }
