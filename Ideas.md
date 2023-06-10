@@ -1,17 +1,20 @@
 # Ideas & Nodes
 
 ## TODO
-- **Overview first, zoom and filter, then details on demand**
-- Plot titles, axis labels, legends
-- Include instructions  (?)
-- nice design
-- Always metric per population, e.g. vacc/cases per 1 mio (or eq)
-- Use vue.js
+- [ ] changes data on change of drop down
+- [ ] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
+- [ ] introduce brushing/filter transition (d3_transitions.html of tutorial)
+- [ ] Introduce zoom and pan for map
 
 
 </br>
 
 ## Notes
+- **Overview first, zoom and filter, then details on demand**
+- Plot titles, axis labels, legends
+- Include instructions  (?)
+- nice design
+- Always metric per population, e.g. vacc/cases per 1 mio (or eq)
 - GEODATA for AFRICA: https://gist.github.com/1310aditya/35b939f63d9bf7fbafb0ab28eb878388#file-africa-json
 - https://geojson-maps.ash.ms/
 
