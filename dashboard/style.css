@@ -12,6 +12,7 @@ body{
 }
 
 /* Headers */
+/* TODO make dependent on min screen size*/
 h1{
 	font-size:36px
 }
@@ -19,6 +20,7 @@ h1{
 h2{
 	font-size:23px;
 	text-align:center;
+	padding: 0px;
 }
 
 /* Paragraph */
@@ -33,7 +35,7 @@ p {
 }
 
 /* Grid for plots */
-.row{
+/* .row{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
@@ -44,20 +46,43 @@ p {
 	display: flex;
 	flex-direction: column;
 	flex-basis: 100%;
+	flex-wrap: wrap;
+	height: 100%;
 	flex: 1;
-}
+}*/
 
-svg {
+.column svg {
 	width: 100%;
 	height: 100%;
+} 
+
+.row {
+	display: flex;
+	flex-wrap: wrap;
+  }
+  
+.column {
+flex: 1;
+width: 50%;
+height: calc(50vh - 100px);
 }
+  
+/* #left_col1,
+#right_col1,
+#left_col2,
+#right_col2 {
+
+} */
 
 
 /* FOR TESTING */
 #right_col2{
-	background-color: rgb(186, 210, 240);
+	background-color: rgb(222, 230, 241);
 }
 
+#right_col1{
+	background-color: rgb(241, 222, 227);
+}
 
  /* Dashboard banner */
 .banner{

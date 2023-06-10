@@ -29,13 +29,16 @@ console.log(data)
 const data_grouped = d3.group(data, d => d.country);
 
 
-// Get proportions of svg
-const svg = d3.select("#right_col2")
-console.log(svg._groups[0][0]["clientHeight"])
-const w = svg._groups[0][0]["clientWidth"];
-const h = svg._groups[0][0]["clientHeight"];
+// Create svg
+const div = d3.select("#right_col2")
+const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+const h = div._groups[0][0]["clientHeight"] - 100;
 const x_padding = 100;
 const y_padding = 0;
+
+const svg = d3.select("#br_svg")
+              .attr("width", w)
+              .attr("height", h)
 
 
 console.log(svg)
@@ -54,7 +57,7 @@ svg.append("g")
 // Add x axis
 const xScale = d3.scaleTime()
                     .domain(d3.extent(data, function(d){return d.date}))
-                    .range([x_padding, w - x_padding*1.5]);
+                    .range([x_padding, w]);
 
 const xAxis = d3.axisBottom(xScale)
                 .tickFormat(d3.timeFormat('%d-%b %y'))
@@ -100,11 +103,11 @@ function hoverOn(event, d) {
         .attr("stroke-width", 4.5)
         .attr("stroke", "red")
 
-    svg.append("text")
-        .text(d[0])
-        .attr("x", xScale(d[1].slice(-1)[0].date) + 12)
-        .attr("y", yScale(d[1].slice(-1)[0].vacc) + 6)
-        .attr("class", "textBox")
+    // svg.append("text")
+    //     .text(d[0])
+    //     .attr("x", xScale(d[1].slice(-1)[0].date) + 12)
+    //     .attr("y", yScale(d[1].slice(-1)[0].vacc) + 6)
+    //     .attr("class", "textBox")
     }
 
 function hoverOff(event, d) {
@@ -113,7 +116,7 @@ function hoverOff(event, d) {
         .attr("stroke-width", 2)
         .attr("stroke", colorScale(d[0]))
 
-    svg.selectAll(".textBox").remove()
+    // svg.selectAll(".textBox").remove()
     }
 
 
@@ -125,10 +128,10 @@ function clickOn(event, d) {
         .attr("stroke-width", 4.5)
         .attr("d", l => line(d[1]))
 
-    svg.append("text")
-        .text(d[0])
-        .attr("x", xScale(d[1].slice(-1)[0].date) + 12)
-        .attr("y", yScale(d[1].slice(-1)[0].vacc) + 6)
+    // svg.append("text")
+    //     .text(d[0])
+    //     .attr("x", xScale(d[1].slice(-1)[0].date) + 12)
+    //     .attr("y", yScale(d[1].slice(-1)[0].vacc) + 6)
 }
 
 
@@ -146,9 +149,9 @@ svg.append("text")
 .attr("class", "y label")
 .attr("text-anchor", "middle")
 .attr("x", -h/2)
-.attr("y", x_padding - 60)
+.attr("y", x_padding - 55)
 .attr("transform", "rotate(-90)")
-.text("New vaccinations (per 1 mil.)"); // TODO
+.text("Smoothed new vaccinations (per 1 mil.)"); // TODO
 
 });
 
