@@ -2,6 +2,7 @@
 data/
 
 # shortcuts
+.jpg.lnk
 .lnk
 
 # vscode specific stuff
