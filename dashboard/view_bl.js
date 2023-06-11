@@ -4,15 +4,11 @@
 
 // Load data
 d3.csv("../data/scatter.csv").then(data => {
-// Pre-process data -> make empty strings null and else numeric
-
-
 
 // Create svg
 const div = d3.select("#left_col2")
 const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
 const h = div._groups[0][0]["clientHeight"] - 80;
-console.log(h)
 const x_padding = 100;
 const y_padding = 20;
 
@@ -31,25 +27,35 @@ d3.select("#corr_variable").on("change", function() {
 function plotScatter(corr_var, corr_var_clean, sel_countries) {
     d3.select("#bl_svg").remove();
 
-    let svg = d3.selectAll("#left_col2")
+    let svg = d3.select("#left_col2")
                 .append("svg")
-                .attr("id", "#bl_svg")
+                .attr("id", "bl_svg")
                 .attr("width", w)
                 .attr("height", h);
+    
                 
+    let data_sample = []
+    data.forEach(e => {
+        if (e[corr_var]) {
+            var dict = {
+                "country": e["country"], 
+                "population": +e["population"],
+                "total_cases_per_million": +e["total_cases_per_million"],
+                corr_var: +e[corr_var],
+            }
+            data_sample.push(dict)
+        }
+    });
 
-    console.log(data)
-    console.log(corr_var)
-
-
+    
     // Add x axis
+    const xMinMax = d3.extent(data_sample, d => d["corr_var"])
     const xScale = d3.scaleLinear()
-                    .domain(d3.extent(data, d => d[corr_var]))
-                    .range([x_padding, w]);
-    console.log(data[34])
+                    .domain([xMinMax[0]*0.8, xMinMax[1]*1.05])
+                    .range([x_padding, w - x_padding]);
 
     const xAxis = d3.axisBottom(xScale)
-                    .ticks().tickFormat((d, i) => d.toString()) // TODO
+                    .ticks().tickFormat(d => d.toLocaleString()) // TODO
 
     svg.append("g")
         .attr("transform", "translate(0," + (h - y_padding) + ")")
@@ -57,13 +63,15 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
 
 
     // Add y axis
-    console.log(d3.extent(data, d => d["total_cases_per_million"]))
-    const yScale = d3.scaleLinear()
-                        .domain(d3.extent(data, d => d["total_cases_per_million"]))
-                        .range([h - y_padding, y_padding]);
-
-    const yAxis = d3.axisLeft(yScale)
-                    .ticks().tickFormat(d => d.toString()); // TODO
+    const yMinMax = d3.extent(data_sample, d => d["total_cases_per_million"]);
+    const yScale = d3.scaleLog()
+        .domain([100, yMinMax[1] * 1.1])
+        .range([h - y_padding, y_padding]);
+    
+        const yAxis = d3.axisLeft(yScale)
+        // .ticks(10)
+        .tickValues([100, 1000, 10000, 50000])
+        .tickFormat(d3.format(",.0f"))
 
     svg.append("g")
         .attr("transform", "translate(" + (x_padding) + ",0)")
@@ -71,22 +79,22 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
 
 
     // Circle size scaler
-    const circleScaler = d3.scaleLinear()
-                            .domain(d3.extent(data, d => d["population"]))
-                            .range([1.5,5])
-
+    popMinMax = d3.extent(data_sample, d => d["population"])
+    const circleScaler = d3.scaleSqrt()
+                            .domain([popMinMax[0], popMinMax[1]])
+                            .range([2, 10])
 
     // Add data
     svg.append("g")
         .selectAll("circle")
-        .data(data)
+        .data(data_sample)
         .enter()
         .append("circle")
             .attr("cy", d => yScale(d["total_cases_per_million"]))
-            .attr("cx", d => xScale(d[corr_var]))
+            .attr("cx", d => xScale(d["corr_var"]))
             .attr("r", d => circleScaler(d["population"]))
-            .attr("fill", "#1F7A8C") // TODO make darker
-            .attr("fill-opacity", 0.75);
+            .attr("fill", "#0d5f6f") // TODO make darker?
+            .attr("fill-opacity", 0.6);
 
 
     // Add x axis label
@@ -105,9 +113,40 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
         .attr("x", -h/2 - 10)
         .attr("y", x_padding - 55)
         .attr("transform", "rotate(-90)")
-        // .attr("font-size", 14)
-        .text("Total cases (per 1 mil.)"); // TODO
+        .attr("font-size", 14)
+        .text("Log total cases (per 1 mil.)"); // TODO
 
+    // Add legend of circle size
+    const yOffset = 30
+    svg.append("g")
+        .selectAll("circle")
+        .data([[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 200_000_000]])
+        .enter()
+        .append("circle")
+            .attr("cy", d => d[0])
+            .attr("cx", w-90)
+            .attr("r", d => circleScaler(d[1]))
+            .attr("fill", "#0d5f6f")
+
+    svg.append("g")
+        .selectAll("text")
+        .data([[yOffset, "100,000"], [yOffset+20, "10,000,000"], [yOffset+40, "200,000,000"]])
+        .enter()
+        .append("text")
+            .attr("text-anchor", "end")
+            // .attr("alignment-baseline", "middle")
+            .attr("y", d => d[0]+5)
+            .attr("x", w)
+            .attr("font-size", 12)
+            .text(d => d[1])
+
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("y", 12)
+        .attr("x", w+5)
+        .attr("font-size", 15)
+        .text("Population size")
+        
 
 }
 
