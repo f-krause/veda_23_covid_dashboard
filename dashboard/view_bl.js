@@ -2,29 +2,32 @@
 // View bottom left: Scatterplot
 // ##################################
 
-// Load data
-d3.csv("../data/scatter.csv").then(data => {
-
-// Create svg
-const div = d3.select("#left_row2")
-const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
-const h = div._groups[0][0]["clientHeight"] - 80;
-const x_padding = 100;
-const y_padding = 20;
-
 // Change correlation variable on drop down change
 let corr_var = "human_development_index"
 let corr_var_clean = "HDI"
 
+
+function plotScatterPlot(sel_countries, sel_colors) {
+// Load data
+d3.csv("../data/scatter.csv").then(data => {
+
+// Store values for svg creation
+const div = d3.select("#left_row2")
+const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+const h = div._groups[0][0]["clientHeight"] - 90;
+const x_padding = 100;
+const y_padding = 20;
+
+// Update 
 d3.select("#corr_variable").on("change", function() {
     // Get column and clean variable name and update plot
     const selector_element = d3.select(this).node()
     corr_var = selector_element.value;
     corr_var_clean = selector_element.options[selector_element.options.selectedIndex].text
-    plotScatter(corr_var, corr_var_clean, "")
+    plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors)
 })
 
-function plotScatter(corr_var, corr_var_clean, sel_countries) {
+function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) {
     d3.select("#bl_svg").remove();
 
     let svg = d3.select("#left_row2")
@@ -79,8 +82,8 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
 
 
     // Circle size scaler
-    popMinMax = d3.extent(data_sample, d => d["population"])
-    const circleScaler = d3.scaleSqrt()
+    const popMinMax = d3.extent(data_sample, d => d["population"])
+    const circleScaler = d3.scaleLinear()
                             .domain([popMinMax[0], popMinMax[1]])
                             .range([2, 10])
 
@@ -94,7 +97,19 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
             .attr("cx", d => xScale(d["corr_var"]))
             .attr("r", d => circleScaler(d["population"]))
             .attr("fill", "#0d5f6f") // TODO make darker?
-            .attr("fill-opacity", 0.6);
+            .attr("fill-opacity", 0.6)
+            .attr("stroke", function(d, i) {
+                if (sel_countries.includes(d["country"])) {
+                    return sel_colors[i]
+                } else {
+                    return null
+                }
+            })
+            .attr("stroke-width", 1.5);
+
+    function highlighting(d) {
+
+    }
 
 
     // Add x axis label
@@ -151,7 +166,6 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
 
 }
 
-plotScatter(corr_var, corr_var_clean, "")
+plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors)
 })
-
-
+}

@@ -5,7 +5,7 @@
 // Store values for svg creation
 const div = d3.select("#left_row1")
 const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
-const h = div._groups[0][0]["clientHeight"] - 80;
+const h = div._groups[0][0]["clientHeight"] - 90;
 
 
 // Load data
@@ -16,7 +16,17 @@ Promise.all([
 
 
 // Collect countries selected
-sel_countries = []
+sel_countries = ["Africa"] // why does this not work if type specified?
+sel_colors = Array(55).fill("red")
+sel_colors[0] = "#0d5f6f"
+
+// const baseColor = "#0d5f6f";
+// const numSaturations = 55; // Number of different saturations
+
+// // Generate a range of colors with varying saturations
+// sel_colors = d3.scaleOrdinal()
+//   .range(d3.quantize(d3.interpolateSpectral, numSaturations).map(s => d3.color(baseColor).brighter(s)));
+console.log(sel_colors[0])
 
 // Map function
 function plotMap() {
@@ -30,9 +40,7 @@ function plotMap() {
                 .attr("height", h);
 
     // Plot map of US states using Albers projection
-    let maparea = svg.append("g")//.attr("transform", "translate(0," + 0 + ")")
-
-    //   const rescale_factor = d3.min([w/300, h/100]) // Dynamically rescale map based on svg width
+    let maparea = svg.append("g")
     const projection = d3.geoMercator().fitSize([w/2, h+25], geodata)
     const path = d3.geoPath(projection)
     const stroke_col = "orange"
@@ -69,6 +77,8 @@ function plotMap() {
             .style("stroke", stroke_col)
             .transition().duration(90)
         sel_countries.push(d.country)
+        // sel_colors.push("red")
+        updatePlots(sel_countries, sel_colors)
         // TODO update other plots!
     }
 
@@ -79,18 +89,26 @@ function plotMap() {
 
     function resetSelection(event, d) {
         if (event.target.id === "ul_svg" | event.target.id === "document") {
+            sel_countries = ["Africa"]
+            // sel_colors = ["#0d5f6f"]
             plotMap()
-            // TODO reset everything
+            updatePlots(sel_countries, sel_colors)
+            // TODO reset all plots
         }
     }
 }
 
 // Call functions to plot map
 plotMap()
+updatePlots(sel_countries, sel_colors)
 })
 
 
-
+function updatePlots(sel_countries) {
+    plotUpperLineChart(sel_countries, sel_colors)
+    plotBottomLineChart(sel_countries, sel_colors)
+    plotScatterPlot(sel_countries, sel_colors)
+}
 
 
 

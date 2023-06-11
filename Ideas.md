@@ -1,14 +1,17 @@
 # Ideas & Nodes
 
 ## TODO
-- [x] scatter plot "append" issue when changing data - x owned by Alina
-- [ ] svg size issue (longer than it should be)
-- [x] scatter yScale issue (labels below axis)
+- [ ] make Africa avg. line special (e.g. dashed)
+- [ ] include a list of country colors (Custom color scheme for linecharts)
+- [ ] population size is encoded wrongly
+- [ ] add legend to map
 - [ ] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
+- [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25
+- [ ] svg size issue (longer than it should be)
+- [x] scatter plot "append" issue when changing data - x owned by Alina
+- [x] scatter yScale issue (labels below axis)
 - [ ] introduce brushing/filter transition (d3_transitions.html of tutorial)
 - [ ] Introduce zoom and pan for map
-- [ ] Custom color scheme for linecharts
-- [ ] make Africa avg. line special (e.g. dashed)
 
 
 </br>
