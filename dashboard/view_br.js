@@ -88,11 +88,7 @@ function plotBottomLineChart(sel_countries, sel_colors) {
         .y(function(d) {
             return yScale(d.vacc);
         });
-    
-    var colorScale = d3.scaleOrdinal()
-        .domain(countries)
-        .range(d3.schemeTableau10);
-    
+      
     svg.append("g")
         .selectAll("path")
         .data(data_grouped)
@@ -128,7 +124,7 @@ function plotBottomLineChart(sel_countries, sel_colors) {
         d3.select(this)
             .transition()
             .attr("stroke-width", 2)
-            .attr("stroke", colorScale(d[0]));
+            // .attr("stroke", "red");
         }
     
     

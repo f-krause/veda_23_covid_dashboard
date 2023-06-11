@@ -88,10 +88,6 @@ let line = d3.line()
         return yScale(d.cases);
     });
 
-var colorScale = d3.scaleOrdinal()
-    .domain(countries)
-    .range(d3.schemeTableau10);
-
 svg.append("g")
     .selectAll("path")
     .data(data_grouped)
@@ -123,11 +119,11 @@ function hoverOn(event, d) {
         // .attr("stroke", "red");
     }
 
-function hoverOff(event, d) {
+function hoverOff(event, d, i) {
     d3.select(this)
         .transition()
         .attr("stroke-width", 2)
-        .attr("stroke", colorScale(d[0]));
+        // .attr("stroke", "red");
     }
 
 

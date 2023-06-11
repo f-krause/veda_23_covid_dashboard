@@ -26,6 +26,11 @@ sel_colors[0] = "#0d5f6f"
 // // Generate a range of colors with varying saturations
 // sel_colors = d3.scaleOrdinal()
 //   .range(d3.quantize(d3.interpolateSpectral, numSaturations).map(s => d3.color(baseColor).brighter(s)));
+
+// var colorScale = d3.scaleOrdinal()
+//     .domain(countries)
+//     .range(d3.schemeTableau10);
+
 console.log(sel_colors[0])
 
 // Map function
