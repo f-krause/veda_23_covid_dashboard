@@ -34,7 +34,7 @@ data_raw.forEach(e => {
 const data_grouped = d3.group(data, d => d.country);
 
 // Create svg
-const div = d3.select("#right_col1")
+const div = d3.select("#right_row1")
 const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
 const h = div._groups[0][0]["clientHeight"] - 80;
 const x_padding = 100;

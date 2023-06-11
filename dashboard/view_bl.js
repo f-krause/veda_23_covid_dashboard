@@ -6,7 +6,7 @@
 d3.csv("../data/scatter.csv").then(data => {
 
 // Create svg
-const div = d3.select("#left_col2")
+const div = d3.select("#left_row2")
 const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
 const h = div._groups[0][0]["clientHeight"] - 80;
 const x_padding = 100;
@@ -27,7 +27,7 @@ d3.select("#corr_variable").on("change", function() {
 function plotScatter(corr_var, corr_var_clean, sel_countries) {
     d3.select("#bl_svg").remove();
 
-    let svg = d3.select("#left_col2")
+    let svg = d3.select("#left_row2")
                 .append("svg")
                 .attr("id", "bl_svg")
                 .attr("width", w)
@@ -101,7 +101,7 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
     svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
-        .attr("x", (x_padding + w)/2)
+        .attr("x", (x_padding + w - 95)/2)
         .attr("y", h - y_padding + 40)
         .text(corr_var_clean);
 
@@ -116,6 +116,7 @@ function plotScatter(corr_var, corr_var_clean, sel_countries) {
         .attr("font-size", 14)
         .text("Log total cases (per 1 mil.)"); // TODO
 
+        
     // Add legend of circle size
     const yOffset = 30
     svg.append("g")
