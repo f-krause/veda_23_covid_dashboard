@@ -1,9 +1,9 @@
 # Ideas & Nodes
 
 ## TODO
-- [ ] scatter plot "append" issue when changing data
+- [x] scatter plot "append" issue when changing data - x owned by Alina
 - [ ] svg size issue (longer than it should be)
-- [ ] scatter yScale issue (labels below axis)
+- [x] scatter yScale issue (labels below axis)
 - [ ] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
 - [ ] introduce brushing/filter transition (d3_transitions.html of tutorial)
 - [ ] Introduce zoom and pan for map
