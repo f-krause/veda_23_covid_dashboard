@@ -16,8 +16,7 @@ Promise.all([
 
 
 // Collect countries selected
-sel_states = []
-
+sel_countries = []
 
 // Map function
 function plotMap() {
@@ -34,7 +33,7 @@ function plotMap() {
     let maparea = svg.append("g")//.attr("transform", "translate(0," + 0 + ")")
 
     //   const rescale_factor = d3.min([w/300, h/100]) // Dynamically rescale map based on svg width
-    const projection = d3.geoMercator().scale(140).translate([300, 100])
+    const projection = d3.geoMercator().fitSize([w/2, h+25], geodata)
     const path = d3.geoPath(projection)
     const stroke_col = "orange"
 
@@ -69,9 +68,10 @@ function plotMap() {
             .style("stroke-width", 2.5)
             .style("stroke", stroke_col)
             .transition().duration(90)
-
-        sel_states.push(d.State)
+        sel_countries.push(d.country)
+        // TODO update other plots!
     }
+
 
     // Reset plotting when clicking on background html/svg
     d3.select("#left_row1")
@@ -82,7 +82,6 @@ function plotMap() {
             plotMap()
             // TODO reset everything
         }
-
     }
 }
 
