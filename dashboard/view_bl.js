@@ -15,7 +15,8 @@ d3.csv("../data/scatter.csv").then(data => {
 const div = d3.select("#left_row2")
 const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
 const h = div._groups[0][0]["clientHeight"] - 90;
-const x_padding = 100;
+const x_padding_left = 85;
+const x_padding_right = 120;
 const y_padding = 20;
 
 // Update 
@@ -55,7 +56,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     const xMinMax = d3.extent(data_sample, d => d["corr_var"])
     const xScale = d3.scaleLinear()
                     .domain([xMinMax[0]*0.8, xMinMax[1]*1.05])
-                    .range([x_padding, w - x_padding]);
+                    .range([x_padding_left, w - x_padding_right]);
 
     const xAxis = d3.axisBottom(xScale)
                     .ticks().tickFormat(d => d.toLocaleString()) // TODO
@@ -77,13 +78,13 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .tickFormat(d3.format(",.0f"))
 
     svg.append("g")
-        .attr("transform", "translate(" + (x_padding) + ",0)")
+        .attr("transform", "translate(" + (x_padding_left) + ",0)")
         .call(yAxis);
 
 
     // Circle size scaler
     const popMinMax = d3.extent(data_sample, d => d["population"])
-    const circleScaler = d3.scaleLinear()
+    const circleScaler = d3.scaleSqrt()
                             .domain([popMinMax[0], popMinMax[1]])
                             .range([2, 10])
 
@@ -116,7 +117,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     svg.append("text")
         .attr("class", "x label")
         .attr("text-anchor", "middle")
-        .attr("x", (x_padding + w - 95)/2)
+        .attr("x", (x_padding_left + w - x_padding_right)/2)
         .attr("y", h - y_padding + 40)
         .text(corr_var_clean);
 
@@ -126,7 +127,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .attr("class", "y label")
         .attr("text-anchor", "middle")
         .attr("x", -h/2 - 10)
-        .attr("y", x_padding - 55)
+        .attr("y", x_padding_left - 55)
         .attr("transform", "rotate(-90)")
         .attr("font-size", 14)
         .text("Log total cases (per 1 mil.)"); // TODO

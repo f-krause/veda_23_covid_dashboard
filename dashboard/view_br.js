@@ -145,13 +145,13 @@ function plotBottomLineChart(sel_countries, sel_colors) {
     
     // Add y axis label
     svg.append("text")
-    .attr("class", "y label")
-    .attr("text-anchor", "middle")
-    .attr("x", -h/2 -10)
-    .attr("y", x_padding_left - 35)
-    .attr("transform", "rotate(-90)")
-    .attr("font-size", 14)
-    .text("Smoothed new vaccinations (per 1 mil.)"); // TODO
+        .attr("class", "y label")
+        .attr("text-anchor", "middle")
+        .attr("x", -h/2 -10)
+        .attr("y", x_padding_left - 50)
+        .attr("transform", "rotate(-90)")
+        .attr("font-size", 14)
+        .text("Smoothed new vaccinations (per 1 mil.)"); // TODO
     
     });
     }
