@@ -13,8 +13,8 @@
 - [ ] svg size issue (longer than it should be)
 - [x] scatter plot "append" issue when changing data - x owned by Alina
 - [x] scatter yScale issue (labels below axis)
-- [ ] introduce brushing/filter transition (d3_transitions.html of tutorial)
-- [ ] Introduce zoom and pan for map
+- [ ] (introduce brushing/filter transition (d3_transitions.html of tutorial))
+- [ ] (Introduce zoom and pan for map)
 
 
 </br>

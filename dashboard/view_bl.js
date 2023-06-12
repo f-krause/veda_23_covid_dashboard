@@ -21,7 +21,7 @@ const y_padding = 20;
 
 
 // Update 
-d3.select("#corr_variable").on("change", function() {
+d3.select("#dropCorrVar").on("change", function() {
     // Get column and clean variable name and update plot
     const selector_element = d3.select(this).node()
     corr_var = selector_element.value;
@@ -110,9 +110,9 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             })
             .attr("stroke-width", 1.5);
 
-    function highlighting(d) {
+    // function highlighting(d) {
 
-    }
+    // }
 
 
     // Add x axis label
@@ -134,6 +134,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         
     // Add legend of circle size
     const yOffset = h/2
+
     svg.append("g")
         .selectAll("circle")
         .data([[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 100_000_000]])
@@ -162,7 +163,6 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .attr("x", w-10)
         .text("Population size")
         
-
 }
 
 plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors)
