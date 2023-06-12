@@ -21,6 +21,7 @@ data_raw.forEach(e => {
     delete e.country;
 
     if (sel_countries.includes(currCountry)) {
+        console.log(currCountry)
         Object.entries(e).forEach(
             ([key, value]) => data.push({
                 country: currCountry,
@@ -30,7 +31,6 @@ data_raw.forEach(e => {
         );   
     }
 });
-
 
 // Group data by country
 const data_grouped = d3.group(data, d => d.country);

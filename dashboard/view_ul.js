@@ -25,7 +25,8 @@ Promise.all([
     d3.json('../data/geo_africa.json') // Geodata from: https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson
 ]).then(([data, geodata]) => {
 
-
+// console.log(geodata.features)
+// console.log(data)
 // Map function
 function plotMap() {
     // remove existing map
@@ -47,7 +48,7 @@ function plotMap() {
         .enter()
         .append("path")
             .attr("d", path) // Add the projection
-            .style("stroke-alignment", "inner")
+            // .style("stroke-alignment", "inner") // DELETE NOT WORKING
             .style("stroke", "white")
             .style("stroke-width", 1)
             .style("stroke-array", "100")
@@ -57,7 +58,7 @@ function plotMap() {
     // Scaler to map total cases to color
     const minMax = d3.extent(data, d => +d["total_cases_per_million"])
 
-    const color_scale = d3.scaleLog()
+    const color_scale = d3.scaleSymlog()
         .domain([minMax[0], minMax[1]])
         .range([0.45, 0.15])
 
@@ -81,7 +82,6 @@ function plotMap() {
             } else {
                 sel_colors[d.country] = colors_stack.pop()
             }
-            
             d3.select(this)
                 .raise()
                 .style("stroke-width", 3)
@@ -136,7 +136,7 @@ function plotMap() {
         .attr("y", 120)
         .attr("x", w-35)
         .attr("class", "legendText")
-        .text("Country last visited")
+        .text("Last country visited")
 
 
     // Reset plotting when clicking on background html/svg
@@ -163,10 +163,11 @@ function plotMap() {
 
     // Add legend
     const yOffset = 235
+    const legendData = [[yOffset, 0, "NA"], [yOffset+20, 200, "200"], [yOffset+40, 20_000, "20 000"], [yOffset+60, 200_000, "200 000"]]
 
     svg.append("g")
         .selectAll("rect")
-        .data([[yOffset, 200], [yOffset+20, 20_000], [yOffset+40, 200_000]])
+        .data(legendData)
         .enter()
         .append("rect")
             .attr("x", w-130)
@@ -177,14 +178,14 @@ function plotMap() {
 
     svg.append("g")
         .selectAll("text")
-        .data([[yOffset, "200"], [yOffset+20, "20,000"], [yOffset+40, "200,000"]])
+        .data(legendData)
         .enter()
         .append("text")
             .attr("text-anchor", "end")
             .attr("y", d => d[0]+11)
             .attr("x", w-35)
             .attr("font-size", 12)
-            .text(d => d[1])
+            .text(d => d[2])
 
     svg.append("text")
         .attr("class", "legendText")

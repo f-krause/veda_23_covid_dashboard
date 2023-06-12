@@ -33,6 +33,7 @@
 
 ## Challenges
 - How to assign colors to selected countries
+- diffferent country names in geojson and OWID data
 
 </br>
 
