@@ -58,7 +58,7 @@ function plotMap() {
 
     const color_scale = d3.scaleSymlog()
         .domain([minMax[0], minMax[1]])
-        .range([0.45, 0.2])
+        .range([0.55, 0.15])
 
 
     // Fill states according log total cases
