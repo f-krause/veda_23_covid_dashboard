@@ -4,9 +4,20 @@
 
 // Store values for svg creation
 const div = d3.select("#left_row1")
-const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+// console.log(div._groups[0][0])
+const w = div._groups[0][0]["clientWidth"] / 2; // FIXME weird issue of wrong value
 const h = div._groups[0][0]["clientHeight"] - 90;
+// console.log(w)
 
+
+// Initialize selections and colors
+sel_countries = ["Africa"]; // FIXME why does this not work if type specified?
+// Other scales: d3.schemeCategory10, d3.schemeTableau10, d3.schemeCategory20
+const custom_colors = ["#e41a1c","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf"].concat(d3.schemeCategory10)
+var colors_stack = custom_colors.reverse().slice();
+var sel_colors = {"Africa": "#0d5f6f"};
+
+// console.log(colors_stack)
 
 // Load data
 Promise.all([
@@ -15,28 +26,10 @@ Promise.all([
 ]).then(([data, geodata]) => {
 
 
-// Collect countries selected
-sel_countries = ["Africa"] // why does this not work if type specified?
-sel_colors = Array(55).fill("red")
-sel_colors[0] = "#0d5f6f"
-
-// const baseColor = "#0d5f6f";
-// const numSaturations = 55; // Number of different saturations
-
-// // Generate a range of colors with varying saturations
-// sel_colors = d3.scaleOrdinal()
-//   .range(d3.quantize(d3.interpolateSpectral, numSaturations).map(s => d3.color(baseColor).brighter(s)));
-
-// var colorScale = d3.scaleOrdinal()
-//     .domain(countries)
-//     .range(d3.schemeTableau10);
-
-console.log(sel_colors[0])
-
 // Map function
 function plotMap() {
     // remove existing map
-    d3.select("#ul_svg").remove()
+    d3.selectAll("#ul_svg").remove()
 
     let svg = d3.select("#left_row1")
                 .append("svg")
@@ -46,7 +39,7 @@ function plotMap() {
 
     // Plot map of US states using Albers projection
     let maparea = svg.append("g")
-    const projection = d3.geoMercator().fitSize([w/2, h+25], geodata)
+    const projection = d3.geoMercator().fitSize([4*w/5, h+25], geodata)
     const path = d3.geoPath(projection)
     const stroke_col = "orange"
 
@@ -54,11 +47,10 @@ function plotMap() {
         .data(geodata.features)
         .enter()
         .append("path")
-        .attr("d", path) // Add the projection
-        // .attr("transform", "scale(" + rescale_factor + ") translate(0,0)")
-        .style("stroke-alignment", "inner")
-        .style("stroke", "white")
-        .style("stroke-width", 1)
+            .attr("d", path) // Add the projection
+            .style("stroke-alignment", "inner")
+            .style("stroke", "white")
+            .style("stroke-width", 1)
 
     // Scaler to map income levels to appropriate lightness values
     const minMax = d3.extent(data, d => +d["total_cases_per_million"])
@@ -71,36 +63,73 @@ function plotMap() {
     maparea.selectAll("path")
         .data(data)
         .join("path")
-        .attr("fill", d => d3.hsl(190, 0.79, color_scale(+d["total_cases_per_million"])))
-        .on("click", clickOn)
+            .attr("fill", d => d3.hsl(190, 0.79, color_scale(+d["total_cases_per_million"])))
+            .on("click", clickOn)
 
     // Click effect function
     function clickOn(event, d) {
+        sel_countries.push(d.country)
+        if (colors_stack.length < 1) {
+            sel_colors[d.country] = "red" // If colors exhausted only use red
+        } else {
+            sel_colors[d.country] = colors_stack.pop()
+        }
+        
         d3.select(this)
             .raise()
             .style("stroke-width", 2.5)
-            .style("stroke", stroke_col)
+            .style("stroke", sel_colors[d.country])
             .transition().duration(90)
-        sel_countries.push(d.country)
-        // sel_colors.push("red")
         updatePlots(sel_countries, sel_colors)
-        // TODO update other plots!
     }
 
 
-    // Reset plotting when clicking on background html/svg
+    // Reset plotting when clicking on background html/svg // TODO ADD BUTTON
     d3.select("#left_row1")
-        .on("click", resetSelection) // TODO
+        .on("click", resetSelection)
 
     function resetSelection(event, d) {
         if (event.target.id === "ul_svg" | event.target.id === "document") {
             sel_countries = ["Africa"]
-            // sel_colors = ["#0d5f6f"]
+            sel_colors = {"Africa": "#0d5f6f"}
+            colors_stack = custom_colors.slice()
             plotMap()
             updatePlots(sel_countries, sel_colors)
-            // TODO reset all plots
         }
     }
+
+    // Add legend
+    const yOffset = h/2
+
+    svg.append("g")
+        .selectAll("rect")
+        .data([[yOffset, 200], [yOffset+20, 20_000], [yOffset+40, 200_000]])
+        .enter()
+        .append("rect")
+            .attr("x", w-130)
+            .attr("y", d => d[0])
+            .attr("width", 15)
+            .attr("height", 15)
+            .attr("fill", d => d3.hsl(190, 0.79, color_scale(d[1]))) // fill accordingly
+
+    svg.append("g")
+        .selectAll("text")
+        .data([[yOffset, "200"], [yOffset+20, "20,000"], [yOffset+40, "200,000"]])
+        .enter()
+        .append("text")
+            .attr("text-anchor", "end")
+            .attr("y", d => d[0]+11)
+            .attr("x", w-35)
+            .attr("font-size", 12)
+            .text(d => d[1])
+
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("y", yOffset-20)
+        .attr("x", w-35)
+        .attr("font-size", 15)
+        .text("Million total cases")
+
 }
 
 // Call functions to plot map
@@ -109,7 +138,7 @@ updatePlots(sel_countries, sel_colors)
 })
 
 
-function updatePlots(sel_countries) {
+function updatePlots(sel_countries, sel_colors) {
     plotUpperLineChart(sel_countries, sel_colors)
     plotBottomLineChart(sel_countries, sel_colors)
     plotScatterPlot(sel_countries, sel_colors)
@@ -137,7 +166,7 @@ function updatePlots(sel_countries) {
 //       .append('g')
 //       .attr("class", function(d){return d.properties.name; })
 //       .append("path")
-//       .attr("fill", "#1F7A8C") // TODO fill according to cases
+//       .attr("fill", "#1F7A8C") 
 //       .attr("d", geoGenerator)
 //       .style("stroke", "#fff")
 //     // .on("mouseover", handleMouseOver) // FIXME BROKEN

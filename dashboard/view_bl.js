@@ -13,11 +13,12 @@ d3.csv("../data/scatter.csv").then(data => {
 
 // Store values for svg creation
 const div = d3.select("#left_row2")
-const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+const w = div._groups[0][0]["clientWidth"] - 20;
 const h = div._groups[0][0]["clientHeight"] - 90;
 const x_padding_left = 85;
 const x_padding_right = 120;
 const y_padding = 20;
+
 
 // Update 
 d3.select("#corr_variable").on("change", function() {
@@ -29,7 +30,7 @@ d3.select("#corr_variable").on("change", function() {
 })
 
 function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) {
-    d3.select("#bl_svg").remove();
+    d3.selectAll("#bl_svg").remove();
 
     let svg = d3.select("#left_row2")
                 .append("svg")
@@ -50,7 +51,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             data_sample.push(dict)
         }
     });
-
+    
     
     // Add x axis
     const xMinMax = d3.extent(data_sample, d => d["corr_var"])
@@ -59,7 +60,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
                     .range([x_padding_left, w - x_padding_right]);
 
     const xAxis = d3.axisBottom(xScale)
-                    .ticks().tickFormat(d => d.toLocaleString()) // TODO
+                    .ticks().tickFormat(d => d.toLocaleString()) // TODO add spaces as separators
 
     svg.append("g")
         .attr("transform", "translate(0," + (h - y_padding) + ")")
@@ -86,7 +87,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     const popMinMax = d3.extent(data_sample, d => d["population"])
     const circleScaler = d3.scaleSqrt()
                             .domain([popMinMax[0], popMinMax[1]])
-                            .range([2, 10])
+                            .range([3, 10])
 
     // Add data
     svg.append("g")
@@ -97,13 +98,12 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("cy", d => yScale(d["total_cases_per_million"]))
             .attr("cx", d => xScale(d["corr_var"]))
             .attr("r", d => circleScaler(d["population"]))
-            .attr("fill", "#0d5f6f") // TODO make darker?
-            .attr("fill-opacity", 0.6)
-            .attr("stroke", function(d, i) {
+            .attr("fill-opacity", 0.7)
+            .attr("fill", function(d) {
                 if (sel_countries.includes(d["country"])) {
-                    return sel_colors[i]
+                    return sel_colors[d["country"]]
                 } else {
-                    return null
+                    return "#0d5f6f"
                 }
             })
             .attr("stroke-width", 1.5);
@@ -129,15 +129,15 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .attr("x", -h/2 - 10)
         .attr("y", x_padding_left - 55)
         .attr("transform", "rotate(-90)")
-        .attr("font-size", 14)
-        .text("Log total cases (per 1 mil.)"); // TODO
+        .attr("font-size", 13)
+        .text("Log total cases (per 1 mil.)");
 
         
     // Add legend of circle size
-    const yOffset = 30
+    const yOffset = h/2
     svg.append("g")
         .selectAll("circle")
-        .data([[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 200_000_000]])
+        .data([[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 100_000_000]])
         .enter()
         .append("circle")
             .attr("cy", d => d[0])
@@ -147,7 +147,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     svg.append("g")
         .selectAll("text")
-        .data([[yOffset, "100,000"], [yOffset+20, "10,000,000"], [yOffset+40, "200,000,000"]])
+        .data([[yOffset, "100,000"], [yOffset+20, "10,000,000"], [yOffset+40, "100,000,000"]])
         .enter()
         .append("text")
             .attr("text-anchor", "end")
@@ -159,7 +159,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     svg.append("text")
         .attr("text-anchor", "end")
-        .attr("y", 12)
+        .attr("y", yOffset-20)
         .attr("x", w+5)
         .attr("font-size", 15)
         .text("Population size")

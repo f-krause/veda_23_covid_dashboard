@@ -8,7 +8,7 @@ function plotUpperLineChart(sel_countries, sel_colors) {
 d3.csv("../data/cases.csv").then(data_raw => {
 
 // Save list of countries for later use
-const countries = data_raw.map(d => d.country); 
+// const countries = data_raw.map(d => d.country); // DELETE?
 
 // Date converter
 var timeParser = d3.timeParse("%Y-%m-%d");
@@ -30,21 +30,22 @@ data_raw.forEach(e => {
         );   
     }
 });
-// console.log(data)
+
 
 // Group data by country
 const data_grouped = d3.group(data, d => d.country);
 
+
 // Store values for svg creation
 const div = d3.select("#right_row1")
-const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+const w = div._groups[0][0]["clientWidth"] - 20;
 const h = div._groups[0][0]["clientHeight"] - 90;
 const x_padding_left = 80;
-const x_padding_right = 100;
+const x_padding_right = 0;
 const y_padding = 0;
 
 // remove existing plot
-d3.select("#ur_svg").remove()
+d3.selectAll("#ur_svg").remove()
 
 let svg = d3.select("#right_row1")
               .append("svg")
@@ -92,7 +93,7 @@ svg.append("g")
     .selectAll("path")
     .data(data_grouped)
     .join("path")
-        .attr("stroke", (d, i) => sel_colors[i])
+        .attr("stroke", d => sel_colors[d[0]])
         .attr("fill", "none")
         .attr("stroke-width", 2)
         .attr("d", d => line(d[1]))
@@ -114,16 +115,29 @@ svg.selectAll("text")
 // Hover effect functions
 function hoverOn(event, d) {
     d3.select(this)
-        .transition().duration(80)
+        .transition().duration(70)
         .attr("stroke-width", 4.5)
-        // .attr("stroke", "red");
+
+    svg.append("text")
+        .text(d[0])
+        .attr("x", event.clientX - w - x_padding_right - 52)
+        .attr("y", event.clientY - 140) 
+        .attr("class", "countryLabel")
+        .attr("opacity", 0)
+        .transition().duration(100)
+        .attr("opacity", 1)
     }
 
-function hoverOff(event, d, i) {
+function hoverOff(event, d) {
+    d3.selectAll(".countryLabel")
+        .attr("opacity", 1)
+        .transition().duration(400)
+        .attr("opacity", 0)
+        .remove()
+
     d3.select(this)
         .transition()
         .attr("stroke-width", 2)
-        // .attr("stroke", "red");
     }
 
 
@@ -135,10 +149,7 @@ function clickOn(event, d) {
         .attr("stroke-width", 4.5)
         .attr("d", l => line(d[1]))
 
-    svg.append("text")
-        .text(d[0])
-        .attr("x", xScale(d[1].slice(-1)[0].date) + 12)
-        .attr("y", yScale(d[1].slice(-1)[0].cases) + 6)
+
 }
 
 
@@ -149,8 +160,8 @@ svg.append("text")
     .attr("x", -h/2 -10)
     .attr("y", x_padding_left - 50)
     .attr("transform", "rotate(-90)")
-    .attr("font-size", 14)
-    .text("Smoothed new cases (per 1 mil.)"); // TODO
+    .attr("font-size", 13)
+    .text("Smoothed new cases (per 1 mil.)");
 
 });
 }

@@ -1,11 +1,13 @@
 # Ideas & Nodes
 
-## TODO
+## TODOs
+- [ ] add button to reset view
+- [ ] introduce mouseover for map with country name (maybe even click)
 - [ ] make Africa avg. line special (e.g. dashed)
 - [ ] include a list of country colors (Custom color scheme for linecharts)
 - [ ] population size is encoded wrongly
 - [ ] add legend to map
-- [ ] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
+- [x] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
 - [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25
 - [ ] svg size issue (longer than it should be)
 - [x] scatter plot "append" issue when changing data - x owned by Alina
@@ -25,6 +27,11 @@
 - GEODATA for AFRICA: https://gist.github.com/1310aditya/35b939f63d9bf7fbafb0ab28eb878388#file-africa-json
 - https://geojson-maps.ash.ms/
 
+
+</br>
+
+## Challenges
+- How to assign colors to selected countries
 
 </br>
 

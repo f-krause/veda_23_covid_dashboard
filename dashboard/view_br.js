@@ -38,14 +38,14 @@ function plotBottomLineChart(sel_countries, sel_colors) {
     
     // Store values for svg creation
     const div = d3.select("#right_row2")
-    const w = div._groups[0][0]["clientWidth"] - 20; // TODO make responsive!
+    const w = div._groups[0][0]["clientWidth"] - 20;
     const h = div._groups[0][0]["clientHeight"] - 90;
     const x_padding_left = 80;
     const x_padding_right = 100;
     const y_padding = 0;
     
     // remove existing plot
-    d3.select("#br_svg").remove()
+    d3.selectAll("#br_svg").remove()
     
     let svg = d3.select("#right_row2")
                   .append("svg")
@@ -93,7 +93,7 @@ function plotBottomLineChart(sel_countries, sel_colors) {
         .selectAll("path")
         .data(data_grouped)
         .join("path")
-            .attr("stroke", (d, i) => sel_colors[i])
+            .attr("stroke", d => sel_colors[d[0]])
             .attr("fill", "none")
             .attr("stroke-width", 2)
             .attr("d", d => line(d[1]))
@@ -150,8 +150,8 @@ function plotBottomLineChart(sel_countries, sel_colors) {
         .attr("x", -h/2 -10)
         .attr("y", x_padding_left - 50)
         .attr("transform", "rotate(-90)")
-        .attr("font-size", 14)
-        .text("Smoothed new vaccinations (per 1 mil.)"); // TODO
+        .attr("font-size", 13)
+        .text("Smoothed new vaccinations (per 1 mil.)");
     
     });
     }

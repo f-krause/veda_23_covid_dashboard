@@ -1,7 +1,7 @@
 
 // Create svg
 // const div = d3.select("#left_row2")
-// const w = div._groups[0][0]["clientWidth"]; // TODO make responsive!
+// const w = div._groups[0][0]["clientWidth"];
 // const h = div._groups[0][0]["clientHeight"];
 
 d3.select("#bl_svg")
