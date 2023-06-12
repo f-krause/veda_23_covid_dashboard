@@ -1,11 +1,12 @@
 # Ideas & Nodes
 
 ## TODOs
-- [ ] add button to reset view
-- [ ] introduce mouseover for map with country name (maybe even click)
-- [ ] make Africa avg. line special (e.g. dashed)
-- [ ] include a list of country colors (Custom color scheme for linecharts)
-- [ ] population size is encoded wrongly
+- [ ] countries encoded wrongly
+- [ ] verticel slider to compare values
+- [x] add button to reset view
+- [ ] custom scaling of range depending on corrvar
+- [x] introduce mouseover for map with country name
+- [x] include a list of country colors (Custom color scheme for linecharts)
 - [ ] add legend to map
 - [x] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
 - [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25

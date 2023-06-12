@@ -5,29 +5,31 @@
     <meta name="dashboard" content="width=device-width, initial-scale=1">
     <script src="https://d3js.org/d3.v6.min.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="icon" type="image/x-icon" href="../data/favicon.ico">
 </head>
 
 <body>
     <div class="banner">
-        <h1>COVID-19 Dashboard: Africa</h1>
-        <!-- <p></p> -->
+        <h1>COVID-19 in Africa</h1>
+        <p>from Nov. 2020 to Oct. 2021</p>
     </div>
 
     <div class="container">
         <div class="row">
             <div class="column" id="left_row1">
-                <h2>Total Cases from Nov 2020 to Oct 2022</h2>
+                <h2>Total Cases</h2>
+                <button type="button" id="resetButton">Reset view</button> 
                 <script src="view_ul.js"></script>
             </div>
             <div class="column" id="right_row1">
-                <h2>Timeline of New Cases</h2>
+                <h2>Timeline of New Cases (smoothed)</h2>
                 <script src="view_ur.js"></script>
             </div>
         </div>
         <div class="row">
             <div class="column" id="left_row2" align="center">
                 <h2 id="corr_header">Total Cases vs.
-                    <select name="corr_variables" id="corr_variable" align="centre">
+                    <select name="corr_variables" id="dropCorrVar" align="centre">
                         <option value="human_development_index">HDI</option>
                         <option value="gdp_per_capita">GDP per Capita</option>
                         <option value="extreme_poverty">Extreme Poverty</option>
@@ -40,7 +42,7 @@
 
             </div>
             <div class="column" id="right_row2">
-                <h2>Timeline of New Vaccinations</h2>
+                <h2>Timeline of New Vaccinations (smoothed)</h2>
                 <!-- <svg id="br_svg"></svg> -->
                 <script src="view_br.js"></script>
             </div>

@@ -16,7 +16,7 @@ const div = d3.select("#left_row2")
 const w = div._groups[0][0]["clientWidth"] - 20;
 const h = div._groups[0][0]["clientHeight"] - 90;
 const x_padding_left = 85;
-const x_padding_right = 120;
+const x_padding_right = 140;
 const y_padding = 20;
 
 
@@ -63,6 +63,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
                     .ticks().tickFormat(d => d.toLocaleString()) // TODO add spaces as separators
 
     svg.append("g")
+        .attr("class", "axis")
         .attr("transform", "translate(0," + (h - y_padding) + ")")
         .call(xAxis);
 
@@ -79,6 +80,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .tickFormat(d3.format(",.0f"))
 
     svg.append("g")
+        .attr("class", "axis")
         .attr("transform", "translate(" + (x_padding_left) + ",0)")
         .call(yAxis);
 
@@ -115,8 +117,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     // Add x axis label
     svg.append("text")
-        .attr("class", "x label")
-        .attr("text-anchor", "middle")
+        .attr("class", "axisLabel")
         .attr("x", (x_padding_left + w - x_padding_right)/2)
         .attr("y", h - y_padding + 40)
         .text(corr_var_clean);
@@ -124,13 +125,11 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     // Add y axis label
     svg.append("text")
-        .attr("class", "y label")
-        .attr("text-anchor", "middle")
+        .attr("class", "axisLabel")
         .attr("x", -h/2 - 10)
         .attr("y", x_padding_left - 55)
         .attr("transform", "rotate(-90)")
-        .attr("font-size", 13)
-        .text("Log total cases (per 1 mil.)");
+        .text("Total cases (per mil.)");
 
         
     // Add legend of circle size
@@ -141,7 +140,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .enter()
         .append("circle")
             .attr("cy", d => d[0])
-            .attr("cx", w-90)
+            .attr("cx", w-110)
             .attr("r", d => circleScaler(d[1]))
             .attr("fill", "#0d5f6f")
 
@@ -153,15 +152,14 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("text-anchor", "end")
             // .attr("alignment-baseline", "middle")
             .attr("y", d => d[0]+5)
-            .attr("x", w)
+            .attr("x", w-10)
             .attr("font-size", 12)
             .text(d => d[1])
 
     svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("y", yOffset-20)
-        .attr("x", w+5)
-        .attr("font-size", 15)
+        .attr("class", "legendText")
+        .attr("y", yOffset-25)
+        .attr("x", w-10)
         .text("Population size")
         
 

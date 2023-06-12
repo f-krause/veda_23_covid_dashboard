@@ -6,14 +6,14 @@
 const div = d3.select("#left_row1")
 // console.log(div._groups[0][0])
 const w = div._groups[0][0]["clientWidth"] / 2; // FIXME weird issue of wrong value
-const h = div._groups[0][0]["clientHeight"] - 90;
+const h = div._groups[0][0]["clientHeight"] - 70;
 // console.log(w)
 
 
 // Initialize selections and colors
 sel_countries = ["Africa"]; // FIXME why does this not work if type specified?
 // Other scales: d3.schemeCategory10, d3.schemeTableau10, d3.schemeCategory20
-const custom_colors = ["#e41a1c","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf"].concat(d3.schemeCategory10)
+const custom_colors = ["#e41a1c","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf"].concat(d3.schemeCategory10.slice(1,9))
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
 
@@ -39,9 +39,8 @@ function plotMap() {
 
     // Plot map of US states using Albers projection
     let maparea = svg.append("g")
-    const projection = d3.geoMercator().fitSize([4*w/5, h+25], geodata)
+    const projection = d3.geoMercator().fitSize([3/4*w, h], geodata)
     const path = d3.geoPath(projection)
-    const stroke_col = "orange"
 
     maparea.selectAll("path")
         .data(geodata.features)
@@ -51,55 +50,119 @@ function plotMap() {
             .style("stroke-alignment", "inner")
             .style("stroke", "white")
             .style("stroke-width", 1)
+            .style("stroke-array", "100")
+            .style("stroke-offset", "10")
 
-    // Scaler to map income levels to appropriate lightness values
+
+    // Scaler to map total cases to color
     const minMax = d3.extent(data, d => +d["total_cases_per_million"])
 
     const color_scale = d3.scaleLog()
         .domain([minMax[0], minMax[1]])
         .range([0.45, 0.15])
 
-    // Fill states according to their median household income
+
+    // Fill states according log total cases
     maparea.selectAll("path")
         .data(data)
         .join("path")
             .attr("fill", d => d3.hsl(190, 0.79, color_scale(+d["total_cases_per_million"])))
             .on("click", clickOn)
+            .on("mouseover", hoverOn)
+            .on("mouseout", hoverOff)
+
 
     // Click effect function
     function clickOn(event, d) {
-        sel_countries.push(d.country)
-        if (colors_stack.length < 1) {
-            sel_colors[d.country] = "red" // If colors exhausted only use red
-        } else {
-            sel_colors[d.country] = colors_stack.pop()
-        }
-        
-        d3.select(this)
-            .raise()
-            .style("stroke-width", 2.5)
-            .style("stroke", sel_colors[d.country])
-            .transition().duration(90)
-        updatePlots(sel_countries, sel_colors)
-    }
-
-
-    // Reset plotting when clicking on background html/svg // TODO ADD BUTTON
-    d3.select("#left_row1")
-        .on("click", resetSelection)
-
-    function resetSelection(event, d) {
-        if (event.target.id === "ul_svg" | event.target.id === "document") {
-            sel_countries = ["Africa"]
-            sel_colors = {"Africa": "#0d5f6f"}
-            colors_stack = custom_colors.slice()
-            plotMap()
+        if (! sel_countries.includes(d["country"])) {
+            sel_countries.push(d.country)
+            if (colors_stack.length < 1) {
+                sel_colors[d.country] = "red" // If colors exhausted only use red
+            } else {
+                sel_colors[d.country] = colors_stack.pop()
+            }
+            
+            d3.select(this)
+                .raise()
+                .style("stroke-width", 3)
+                .style("stroke", sel_colors[d.country])
+                .transition().duration(90)
             updatePlots(sel_countries, sel_colors)
         }
     }
 
+
+    // Hover effect functions
+    function hoverOn(event, d) {
+        if (! sel_countries.includes(d["country"])) {
+            let next_col = null
+            if (colors_stack.length < 1) {
+                next_col = "red" // If colors exhausted only use red
+            } else {
+                next_col = colors_stack.slice(-1)
+            }
+        
+            d3.select(this)
+                .raise()
+                .style("stroke", next_col)
+                .style("stroke-width", 3)
+        }
+
+        d3.selectAll(".countryLabelMap")
+            .remove()
+
+        svg.append("text") // TODO
+            .text(d["country"])
+            .attr("text-anchor", "end")
+            .attr("x", w-35)
+            .attr("y", 150)
+            .attr("font-size", 15)
+            .attr("class", "countryLabelMap")
+            .attr("opacity", 0)
+            .transition().duration(100)
+            .attr("opacity", 1)
+        }
+
+    function hoverOff(event, d) {
+        if (! sel_countries.includes(d["country"])) {
+            d3.select(this)
+                .lower()
+                .style("stroke-width", 1)
+                .style("stroke", "white")
+        }
+    }
+
+    svg.append("text")
+        .attr("y", 120)
+        .attr("x", w-35)
+        .attr("class", "legendText")
+        .text("Country last visited")
+
+
+    // Reset plotting when clicking on background html/svg
+    // d3.select("#left_row1")
+    //     .on("click", resetHelper)
+
+    // function resetHelper(event, d) {
+    //     if (event.target.id === "ul_svg" | event.target.id === "document") {
+    //         resetSelection()
+    //     }
+    // }
+
+    d3.select("#resetButton")
+        .on("click", resetSelection)
+
+    function resetSelection() {
+        sel_countries = ["Africa"]
+        sel_colors = {"Africa": "#0d5f6f"}
+        colors_stack = custom_colors.slice()
+        plotMap()
+        updatePlots(sel_countries, sel_colors)
+    }
+
+
     // Add legend
-    const yOffset = h/2
+    const yOffset = 235
 
     svg.append("g")
         .selectAll("rect")
@@ -124,12 +187,10 @@ function plotMap() {
             .text(d => d[1])
 
     svg.append("text")
-        .attr("text-anchor", "end")
+        .attr("class", "legendText")
         .attr("y", yOffset-20)
         .attr("x", w-35)
-        .attr("font-size", 15)
-        .text("Million total cases")
-
+        .text("Total cases (per mil.)")
 }
 
 // Call functions to plot map
@@ -143,59 +204,4 @@ function updatePlots(sel_countries, sel_colors) {
     plotBottomLineChart(sel_countries, sel_colors)
     plotScatterPlot(sel_countries, sel_colors)
 }
-
-
-
-
-// d3.json( "https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson"
-// ).then(function (data) {
-
-//   let projection = d3.geoMercator()
-//   // .fitExtent([[0, 0],[w, h],], data)
-//   .scale(220)
-//   .translate([w / 5, h / 2.3]);
-
-
-//   let geoGenerator = d3.geoPath().projection(projection);
-
-//   // Draw the map
-//   svg.append("g")
-//     .selectAll("path")
-//     .data(data.features)
-//     .enter()
-//       .append('g')
-//       .attr("class", function(d){return d.properties.name; })
-//       .append("path")
-//       .attr("fill", "#1F7A8C") 
-//       .attr("d", geoGenerator)
-//       .style("stroke", "#fff")
-//     // .on("mouseover", handleMouseOver) // FIXME BROKEN
-//     // .on("mouseout", function (d, i) {
-//     //   d3.select(this).transition().duration(300).attr("fill", "#69b3a2");
-//     //   d3.selectAll("text")
-//     //     .transition()
-//     //     .delay(function(d, i) {return 100; })
-//     //     .text("");
-//     // });
-
-
-
-// });
-
-
-// function handleMouseOver(e, d) {
-//   let centroid = geoGenerator.centroid(d);
-
-//   svg.append("text")
-//     .text(d.properties.name)
-//     .style("font-size", 30)
-//     .style("font-weight", "bold")
-//     .style("display", "inline")
-//     .attr("transform", "translate(" + centroid + ")")
-//     .style("fill", "black")
-//     .transition()
-//     .delay(function(d, i) { return 100; });
-// }
-
-
 

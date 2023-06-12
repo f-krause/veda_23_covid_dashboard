@@ -24,7 +24,7 @@ data_raw.forEach(e => {
         Object.entries(e).forEach(
             ([key, value]) => data.push({
                 country: currCountry,
-                date: timeParser(key),      // Change datatype to number
+                date: timeParser(key),
                 cases: +value
             })
         );   
@@ -60,10 +60,11 @@ const xScale = d3.scaleTime()
                  .range([x_padding_left, w-x_padding_right]);
 
 const xAxis = d3.axisBottom(xScale)
-                .tickFormat(d3.timeFormat('%d %b %y'));
-                //.ticks(d3.timeMonth.every(1))
+                .tickFormat(d3.timeFormat('%d %b %y'))
+                .ticks(d3.timeMonth.every(2));
 
 svg.append("g")
+    .attr("class", "axis")
     .attr("transform", "translate(0," + (h - y_padding) + ")")
     .call(xAxis);
 
@@ -76,6 +77,7 @@ const yScale = d3.scaleLinear()
 const yAxis = d3.axisLeft(yScale);
 
 svg.append("g")
+    .attr("class", "axis")
     .attr("transform", "translate(" + (x_padding_left) + "," + (-y_padding) + ")")
     .call(yAxis);
 
@@ -95,12 +97,13 @@ svg.append("g")
     .join("path")
         .attr("stroke", d => sel_colors[d[0]])
         .attr("fill", "none")
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 3)
         .attr("d", d => line(d[1]))
         .on("click", clickOn)
         .on("mouseover", hoverOn)
         .on("mouseout", hoverOff);
 
+        
 // Add country to line
 svg.selectAll("text")
     .data(data_grouped)
@@ -121,15 +124,15 @@ function hoverOn(event, d) {
     svg.append("text")
         .text(d[0])
         .attr("x", event.clientX - w - x_padding_right - 52)
-        .attr("y", event.clientY - 140) 
-        .attr("class", "countryLabel")
+        .attr("y", event.clientY - 165) 
+        .attr("class", "countryLabelCases")
         .attr("opacity", 0)
         .transition().duration(100)
         .attr("opacity", 1)
     }
 
 function hoverOff(event, d) {
-    d3.selectAll(".countryLabel")
+    d3.selectAll(".countryLabelCases")
         .attr("opacity", 1)
         .transition().duration(400)
         .attr("opacity", 0)
@@ -137,7 +140,7 @@ function hoverOff(event, d) {
 
     d3.select(this)
         .transition()
-        .attr("stroke-width", 2)
+        .attr("stroke-width", 3)
     }
 
 
@@ -155,13 +158,11 @@ function clickOn(event, d) {
 
 // Add y axis label
 svg.append("text")
-    .attr("class", "y label")
-    .attr("text-anchor", "middle")
+    .attr("class", "axisLabel")
     .attr("x", -h/2 -10)
     .attr("y", x_padding_left - 50)
     .attr("transform", "rotate(-90)")
-    .attr("font-size", 13)
-    .text("Smoothed new cases (per 1 mil.)");
+    .text("New cases (per mil)");
 
 });
 }
