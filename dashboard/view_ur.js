@@ -16,12 +16,11 @@ var timeParser = d3.timeParse("%Y-%m-%d");
 // Transform data to new format
 let data = [];
 
-data_raw.forEach(e => {    
+data_raw.forEach(e => {
     let currCountry = e.country;
     delete e.country;
 
     if (sel_countries.includes(currCountry)) {
-        console.log(currCountry)
         Object.entries(e).forEach(
             ([key, value]) => data.push({
                 country: currCountry,
@@ -61,7 +60,7 @@ const xScale = d3.scaleTime()
 
 const xAxis = d3.axisBottom(xScale)
                 .tickFormat(d3.timeFormat('%d %b %y'))
-                .ticks(d3.timeMonth.every(2));
+                .ticks(d3.timeMonth.every(3));
 
 svg.append("g")
     .attr("class", "axis")
@@ -99,7 +98,7 @@ svg.append("g")
         .attr("fill", "none")
         .attr("stroke-width", 3)
         .attr("d", d => line(d[1]))
-        .on("click", clickOn)
+        // .on("click", clickOn)
         .on("mouseover", hoverOn)
         .on("mouseout", hoverOff);
 
@@ -129,7 +128,7 @@ function hoverOn(event, d) {
         .attr("opacity", 0)
         .transition().duration(100)
         .attr("opacity", 1)
-    }
+}
 
 function hoverOff(event, d) {
     d3.selectAll(".countryLabelCases")
@@ -141,19 +140,17 @@ function hoverOff(event, d) {
     d3.select(this)
         .transition()
         .attr("stroke-width", 3)
-    }
-
-
-// Click effect functions
-function clickOn(event, d) { 
-    svg.append("path")
-        .attr("stroke", "red")
-        .attr("fill", "none")
-        .attr("stroke-width", 4.5)
-        .attr("d", l => line(d[1]))
-
-
 }
+
+
+// // Click effect functions
+// function clickOn(event, d) { 
+//     svg.append("path")
+//         .attr("stroke", "red")
+//         .attr("fill", "none")
+//         .attr("stroke-width", 4.5)
+//         .attr("d", l => line(d[1]))
+// }
 
 
 // Add y axis label

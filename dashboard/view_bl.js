@@ -54,13 +54,18 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     
     
     // Add x axis
+    let minScaling = 0
+    if (["human_development_index", "life_expectancy"].includes(corr_var)) {
+        minScaling = 0.95
+    }
+
     const xMinMax = d3.extent(data_sample, d => d["corr_var"])
     const xScale = d3.scaleLinear()
-                    .domain([xMinMax[0]*0.8, xMinMax[1]*1.05])
+                    .domain([xMinMax[0] * minScaling, xMinMax[1]*1.05])
                     .range([x_padding_left, w - x_padding_right]);
 
     const xAxis = d3.axisBottom(xScale)
-                    .ticks().tickFormat(d => d.toLocaleString()) // TODO add spaces as separators
+                    .ticks(8).tickFormat(d => d.toLocaleString()) // TODO add spaces as separators
 
     svg.append("g")
         .attr("class", "axis")
@@ -77,7 +82,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         const yAxis = d3.axisLeft(yScale)
         // .ticks(10)
         .tickValues([100, 1000, 10000, 50000])
-        .tickFormat(d3.format(",.0f"))
+        .tickFormat(d => d.toLocaleString())
 
     svg.append("g")
         .attr("class", "axis")
@@ -108,12 +113,42 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
                     return "#0d5f6f"
                 }
             })
-            .attr("stroke-width", 1.5);
+            .on("mouseover", hoverOn)
+            .on("mouseout", hoverOff);
 
-    // function highlighting(d) {
 
-    // }
+    // Hover effect functions
+    function hoverOn(event, d) {        
+        d3.select(this)
+            .raise()
+            .style("stroke-opacity", 1)
+            .style("stroke", "#0d5f6f")
+            .style("stroke-width", 2)
+        
+        svg.append("text") // TODO
+            .text(d["country"])
+            .attr("text-anchor", "end")
+            .attr("x", xScale(d["corr_var"]) - 12)
+            .attr("y", yScale(d["total_cases_per_million"]) + 5)
+            .attr("font-size", 15)
+            .attr("class", "countryLabelMap")
+            .attr("opacity", 0)
+            .transition().duration(30)
+            .attr("opacity", 1)
+        }
 
+    function hoverOff(event, d) {
+        d3.select(this)
+            // .lower()
+            .transition().duration(200)
+            .style("stroke-opacity", 0)
+
+        d3.selectAll(".countryLabelMap")
+            .transition().duration(200)
+            .attr("opacity", 0)
+            .remove()
+    }
+    
 
     // Add x axis label
     svg.append("text")
@@ -134,10 +169,11 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         
     // Add legend of circle size
     const yOffset = h/2
+    const legendData = [[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 100_000_000]]
 
     svg.append("g")
         .selectAll("circle")
-        .data([[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 100_000_000]])
+        .data(legendData)
         .enter()
         .append("circle")
             .attr("cy", d => d[0])
@@ -147,7 +183,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     svg.append("g")
         .selectAll("text")
-        .data([[yOffset, "100,000"], [yOffset+20, "10,000,000"], [yOffset+40, "100,000,000"]])
+        .data(legendData)
         .enter()
         .append("text")
             .attr("text-anchor", "end")
@@ -155,7 +191,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("y", d => d[0]+5)
             .attr("x", w-10)
             .attr("font-size", 12)
-            .text(d => d[1])
+            .text(d => d[1].toLocaleString())
 
     svg.append("text")
         .attr("class", "legendText")

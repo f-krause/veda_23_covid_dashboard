@@ -1,23 +1,33 @@
 # Ideas & Nodes
 
 ## TODOs
-- [ ] countries encoded wrongly
-- [ ] verticel slider to compare values
-- [x] add button to reset view
-- [ ] custom scaling of range depending on corrvar
-- [x] introduce mouseover for map with country name
-- [x] include a list of country colors (Custom color scheme for linecharts)
-- [ ] add legend to map
-- [x] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
+- [ ] vertical slider to compare values
 - [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25
 - [ ] svg size issue (longer than it should be)
-- [x] scatter plot "append" issue when changing data - x owned by Alina
-- [x] scatter yScale issue (labels below axis)
 - [ ] (introduce brushing/filter transition (d3_transitions.html of tutorial))
 - [ ] (Introduce zoom and pan for map)
+- [x] add hover effects to scatter plot
+- [x] custom scaling of range depending on corrvar
+- [x] countries encoded wrongly
+- [x] add button to reset view
+- [x] introduce mouseover for map with country name
+- [x] include a list of country colors (Custom color scheme for linecharts)
+- [x] add legend to map
+- [x] introduce links between plots (structure every plot into a function with list of countries to show/highlight)
+- [x] scatter plot "append" issue when changing data - x owned by Alina
+- [x] scatter yScale issue (labels below axis)
 
 
 </br>
+
+
+## Challenges
+- How to assign colors to selected countries so that they do not change when adding new ones
+- different country names in geojson and OWID data (Swaziland vs Eswatini, Cote d'Ivoire" vs "Ivory Coast)
+- Some countries not available western sahara has no data at all, Mayotte not in geojson, etc.
+
+</br>
+
 
 ## Notes
 - **Overview first, zoom and filter, then details on demand**
@@ -28,14 +38,8 @@
 - GEODATA for AFRICA: https://gist.github.com/1310aditya/35b939f63d9bf7fbafb0ab28eb878388#file-africa-json
 - https://geojson-maps.ash.ms/
 
-
 </br>
 
-## Challenges
-- How to assign colors to selected countries
-- diffferent country names in geojson and OWID data
-
-</br>
 
 ## Common pitfalls
 - making the user scroll up/down

@@ -17,7 +17,6 @@ const custom_colors = ["#e41a1c","#984ea3","#ff7f00","#ffff33","#a65628","#f781b
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
 
-// console.log(colors_stack)
 
 // Load data
 Promise.all([
@@ -25,8 +24,7 @@ Promise.all([
     d3.json('../data/geo_africa.json') // Geodata from: https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson
 ]).then(([data, geodata]) => {
 
-// console.log(geodata.features)
-// console.log(data)
+
 // Map function
 function plotMap() {
     // remove existing map
@@ -60,7 +58,7 @@ function plotMap() {
 
     const color_scale = d3.scaleSymlog()
         .domain([minMax[0], minMax[1]])
-        .range([0.45, 0.15])
+        .range([0.45, 0.2])
 
 
     // Fill states according log total cases
@@ -111,7 +109,7 @@ function plotMap() {
         d3.selectAll(".countryLabelMap")
             .remove()
 
-        svg.append("text") // TODO
+        svg.append("text")
             .text(d["country"])
             .attr("text-anchor", "end")
             .attr("x", w-35)
@@ -163,7 +161,7 @@ function plotMap() {
 
     // Add legend
     const yOffset = 235
-    const legendData = [[yOffset, 0, "NA"], [yOffset+20, 200, "200"], [yOffset+40, 20_000, "20 000"], [yOffset+60, 200_000, "200 000"]]
+    const legendData = [[yOffset, 0, "no data"], [yOffset+20, 200, "200"], [yOffset+40, 20_000, "20.000"], [yOffset+60, 200_000, "200.000"]]
 
     svg.append("g")
         .selectAll("rect")
