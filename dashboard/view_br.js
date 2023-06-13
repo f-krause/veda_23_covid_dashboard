@@ -122,15 +122,19 @@ function hoverOn(event, d) {
         .transition().duration(70)
         .attr("stroke-width", 4.5)
 
+    cursorX = event.clientX - w
+    cursorY = event.clientY - h - 265
     svg.append("text")
-        .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right + 300)
-        .attr("y", event.clientY - h - 265)
+        .text(d[0] + ": " + yScale.invert(cursorY).toFixed(2).toString())
+        .attr("text-anchor", "end")
+        .attr("x", cursorX - x_padding_right + 345)
+        .attr("y", cursorY)
         .attr("class", "countryLabelVacc")
         .attr("opacity", 0)
         .transition().duration(100)
         .attr("opacity", 1)
 }
+
 
 function hoverOff(event, d) {
     d3.selectAll(".countryLabelVacc")

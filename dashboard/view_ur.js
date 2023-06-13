@@ -117,15 +117,17 @@ svg.selectAll("text")
 
 // Hover effect functions
 function hoverOn(event, d) {
-    console.log(event)
     d3.select(this)
         .transition().duration(70)
         .attr("stroke-width", 4.5)
 
+    cursorX = event.clientX - w
+    cursorY = event.clientY - 165
     svg.append("text")
-        .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right + 300)
-        .attr("y", event.clientY - 165)
+        .text(d[0] + ": " + yScale.invert(cursorY).toFixed(2).toString())
+        .attr("text-anchor", "end")
+        .attr("x", cursorX - x_padding_right + 345)
+        .attr("y", cursorY)
         .attr("class", "countryLabelCases")
         .attr("opacity", 0)
         .transition().duration(100)
