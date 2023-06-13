@@ -12,8 +12,9 @@ const h = div._groups[0][0]["clientHeight"] - 70;
 
 // Initialize selections and colors
 sel_countries = ["Africa"]; // FIXME why does this not work if type specified?
-// Other scales: d3.schemeCategory10, d3.schemeTableau10, d3.schemeCategory20
-const custom_colors = ["#e41a1c","#984ea3","#ff7f00","#ffff33","#a65628","#f781bf"].concat(d3.schemeCategory10.slice(1,9))
+// Other scales: d3.schemeCategory10, d3.schemeTableau10
+console.log(d3.schemeCategory10)
+const custom_colors = ["#e41a1c","#31b831","#984ea3","#ff7f00","#f781bf", "#b25f30", "#7f7f7f", "#bcbd22", "#9467bd", "#8c564b", "#e377c2", "#ff7f0e"]
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
 
@@ -76,7 +77,7 @@ function plotMap() {
         if (! sel_countries.includes(d["country"])) {
             sel_countries.push(d.country)
             if (colors_stack.length < 1) {
-                sel_colors[d.country] = "red" // If colors exhausted only use red
+                sel_colors[d.country] = "#e41a1c" // If colors exhausted only use red
             } else {
                 sel_colors[d.country] = colors_stack.pop()
             }
@@ -95,7 +96,7 @@ function plotMap() {
         if (! sel_countries.includes(d["country"])) {
             let next_col = null
             if (colors_stack.length < 1) {
-                next_col = "red" // If colors exhausted only use red
+                next_col = "#e41a1c" // If colors exhausted only use red
             } else {
                 next_col = colors_stack.slice(-1)
             }
