@@ -105,7 +105,13 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("cy", d => yScale(d["total_cases_per_million"]))
             .attr("cx", d => xScale(d["corr_var"]))
             .attr("r", d => circleScaler(d["population"]))
-            .attr("fill-opacity", 0.7)
+            .attr("fill-opacity", function(d) {
+                if (sel_countries.includes(d["country"])) {
+                    return 0.85
+                } else {
+                    return 0.4
+                }
+            })
             .attr("fill", function(d) {
                 if (sel_countries.includes(d["country"])) {
                     return sel_colors[d["country"]]
@@ -131,7 +137,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("x", xScale(d["corr_var"]) - 12)
             .attr("y", yScale(d["total_cases_per_million"]) + 5)
             .attr("font-size", 15)
-            .attr("class", "countryLabelMap")
+            .attr("class", "countryLabelScatter")
             .attr("opacity", 0)
             .transition().duration(30)
             .attr("opacity", 1)
@@ -143,7 +149,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .transition().duration(200)
             .style("stroke-opacity", 0)
 
-        d3.selectAll(".countryLabelMap")
+        d3.selectAll(".countryLabelScatter")
             .transition().duration(200)
             .attr("opacity", 0)
             .remove()
@@ -189,14 +195,14 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .attr("text-anchor", "end")
             // .attr("alignment-baseline", "middle")
             .attr("y", d => d[0]+5)
-            .attr("x", w-10)
+            .attr("x", w-5)
             .attr("font-size", 12)
             .text(d => d[1].toLocaleString())
 
     svg.append("text")
         .attr("class", "legendText")
         .attr("y", yOffset-25)
-        .attr("x", w-10)
+        .attr("x", w-5)
         .text("Population size")
         
 }

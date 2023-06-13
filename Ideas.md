@@ -1,12 +1,12 @@
 # Ideas & Nodes
 
 ## TODOs
-- [ ] vertical slider to compare values
-- [ ] h2 text align issue
+- [ ] vertical slider to compare values (disregarded)
 - [ ] change file structure, one promise and call functions inside with loaded data (much more efficient)
 - [ ] (introduce brushing/filter transition (d3_transitions.html of tutorial))
 - [ ] (Introduce zoom and pan for map)
 - [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25 --> also on OWID
+- [x] h2 text align issue
 - [x] svg size issue (longer than it should be)
 - [x] add hover effects to scatter plot
 - [x] custom scaling of range depending on corrvar
@@ -27,6 +27,7 @@
 - How to assign colors to selected countries so that they do not change when adding new ones
 - different country names in geojson and OWID data (Swaziland vs Eswatini, Cote d'Ivoire" vs "Ivory Coast)
 - Some countries not available western sahara has no data at all, Mayotte not in geojson, etc.
+- updating the variable of the scatter plot with keeping the selected states
 
 </br>
 

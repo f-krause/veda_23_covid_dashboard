@@ -9,7 +9,8 @@ const h = div._groups[0][0]["clientHeight"] - 70;
 
 // Initialize selections and colors
 var sel_countries = ["Africa"];
-const custom_colors = ["#e41a1c", "#31b831", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", "#af7aa1", "#7f7f7f", "#8c564b", "#ff9da7"]
+const custom_colors = ["#e41a1c", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", "#af7aa1", "#7f7f7f", "#8c564b", "#31b831", "#ff9da7"]
+console.log(custom_colors.length)
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
 
@@ -108,7 +109,7 @@ function plotMap() {
         svg.append("text")
             .text(d["country"])
             .attr("text-anchor", "end")
-            .attr("x", w-35)
+            .attr("x", w-25)
             .attr("y", 95)
             .attr("font-size", 15)
             .attr("class", "countryLabelMap")
@@ -126,7 +127,7 @@ function plotMap() {
         }
     }
 
-    
+
     // Reset plotting when clicking on background html/svg
     // d3.select("#left_row1")
     //     .on("click", resetHelper)
@@ -155,9 +156,20 @@ function plotMap() {
 
     svg.append("text")
         .attr("y", yOffset-90)
-        .attr("x", w-35)
+        .attr("x", w-25)
         .attr("class", "legendText")
         .text("Last country visited")
+
+    svg.append("text")
+        .text("Africa average")
+        .attr("text-anchor", "end")
+        .attr("x", w-25)
+        .attr("y", 95)
+        .attr("font-size", 15)
+        .attr("class", "countryLabelMap")
+        .attr("opacity", 0)
+        .transition().duration(100)
+        .attr("opacity", 1)
 
     svg.append("g")
         .selectAll("rect")
@@ -177,14 +189,14 @@ function plotMap() {
         .append("text")
             .attr("text-anchor", "end")
             .attr("y", d => d[0]+11)
-            .attr("x", w-35)
+            .attr("x", w-25)
             .attr("font-size", 12)
             .text(d => d[2])
 
     svg.append("text")
         .attr("class", "legendText")
         .attr("y", yOffset-20)
-        .attr("x", w-35)
+        .attr("x", w-25)
         .text("Total cases (per mil.)")
 }
 
