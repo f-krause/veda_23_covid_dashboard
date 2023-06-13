@@ -6,13 +6,9 @@
 const div = d3.select("#left_row1")
 const w = div._groups[0][0]["clientWidth"];
 const h = div._groups[0][0]["clientHeight"] - 70;
-// console.log(w)
-
 
 // Initialize selections and colors
-sel_countries = ["Africa"]; // FIXME why does this not work if type specified?
-// Other scales: d3.schemeCategory10, d3.schemeTableau10
-console.log(d3.schemeTableau10)
+var sel_countries = ["Africa"];
 const custom_colors = ["#e41a1c", "#31b831", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", "#af7aa1", "#7f7f7f", "#8c564b", "#ff9da7"]
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
@@ -113,7 +109,7 @@ function plotMap() {
             .text(d["country"])
             .attr("text-anchor", "end")
             .attr("x", w-35)
-            .attr("y", 150)
+            .attr("y", 95)
             .attr("font-size", 15)
             .attr("class", "countryLabelMap")
             .attr("opacity", 0)
@@ -130,13 +126,7 @@ function plotMap() {
         }
     }
 
-    svg.append("text")
-        .attr("y", 120)
-        .attr("x", w-35)
-        .attr("class", "legendText")
-        .text("Last country visited")
-
-
+    
     // Reset plotting when clicking on background html/svg
     // d3.select("#left_row1")
     //     .on("click", resetHelper)
@@ -160,8 +150,14 @@ function plotMap() {
 
 
     // Add legend
-    const yOffset = 235
+    const yOffset = 160
     const legendData = [[yOffset, 0, "no data"], [yOffset+20, 200, "200"], [yOffset+40, 20_000, "20.000"], [yOffset+60, 200_000, "200.000"]]
+
+    svg.append("text")
+        .attr("y", yOffset-90)
+        .attr("x", w-35)
+        .attr("class", "legendText")
+        .text("Last country visited")
 
     svg.append("g")
         .selectAll("rect")
