@@ -40,7 +40,7 @@ const div = d3.select("#right_row1")
 const w = div._groups[0][0]["clientWidth"] - 20;
 const h = div._groups[0][0]["clientHeight"] - 90;
 const x_padding_left = 80;
-const x_padding_right = 0;
+const x_padding_right = 20;
 const y_padding = 0;
 
 // remove existing plot
@@ -59,25 +59,26 @@ const xScale = d3.scaleTime()
                  .range([x_padding_left, w-x_padding_right]);
 
 const xAxis = d3.axisBottom(xScale)
-                .tickFormat(d3.timeFormat('%d %b %y'))
-                .ticks(d3.timeMonth.every(3));
+                .tickFormat(d3.timeFormat('%b %y'))
+                .ticks(d3.timeMonth.every(1));
 
 svg.append("g")
     .attr("class", "axis")
     .attr("transform", "translate(0," + (h - y_padding) + ")")
-    .call(xAxis);
+    .call(xAxis)
 
 
 // Add y axis
 const yScale = d3.scaleLinear()
                     .domain([0, d3.max(data.map(d => d.cases))*1.05]) // increase max for aesthetics
-                    .range([h, y_padding]);
+                    .range([h-y_padding, y_padding]);
 
-const yAxis = d3.axisLeft(yScale);
+const yAxis = d3.axisLeft(yScale)
+                .ticks().tickFormat(d => d.toLocaleString());
 
 svg.append("g")
     .attr("class", "axis")
-    .attr("transform", "translate(" + (x_padding_left) + "," + (-y_padding) + ")")
+    .attr("transform", "translate(" + (x_padding_left) + "," + 0 + ")")
     .call(yAxis);
 
 
@@ -123,8 +124,8 @@ function hoverOn(event, d) {
 
     svg.append("text")
         .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right - 40)
-        .attr("y", event.clientY - 160)
+        .attr("x", event.clientX - w - x_padding_right - 20)
+        .attr("y", event.clientY - 170)
         .attr("class", "countryLabelCases")
         .attr("opacity", 0)
         .transition().duration(100)
