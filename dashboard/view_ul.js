@@ -171,6 +171,12 @@ function plotMap() {
         .transition().duration(100)
         .attr("opacity", 1)
 
+    svg.append("text")
+        .attr("class", "legendText")
+        .attr("y", yOffset-20)
+        .attr("x", w-25)
+        .text("Total cases (per mil.)")
+
     svg.append("g")
         .selectAll("rect")
         .data(legendData)
@@ -192,12 +198,6 @@ function plotMap() {
             .attr("x", w-25)
             .attr("font-size", 12)
             .text(d => d[2])
-
-    svg.append("text")
-        .attr("class", "legendText")
-        .attr("y", yOffset-20)
-        .attr("x", w-25)
-        .text("Total cases (per mil.)")
 }
 
 // Call functions to plot map
