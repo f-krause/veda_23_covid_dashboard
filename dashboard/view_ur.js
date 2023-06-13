@@ -116,15 +116,17 @@ svg.selectAll("text")
 
 
 // Hover effect functions
+const locale = d3.formatLocale({decimal: ","})
+const formatDecimal = locale.format("$,")
 function hoverOn(event, d) {
     d3.select(this)
         .transition().duration(70)
         .attr("stroke-width", 4.5)
-
+    
     cursorX = event.clientX - w
     cursorY = event.clientY - 165
     svg.append("text")
-        .text(d[0] + ": " + yScale.invert(cursorY).toFixed(2).toString())
+        .text(d[0] + ": " + formatDecimal(yScale.invert(cursorY).toFixed(2)))
         .attr("text-anchor", "end")
         .attr("x", cursorX - x_padding_right + 345)
         .attr("y", cursorY)
