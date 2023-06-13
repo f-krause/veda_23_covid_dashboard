@@ -3,10 +3,10 @@
 ## TODOs
 - [ ] vertical slider to compare values
 - [ ] change file structure, one promise and call functions inside with loaded data (much more efficient)
-- [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25 --> also on OWID
 - [ ] svg size issue (longer than it should be)
 - [ ] (introduce brushing/filter transition (d3_transitions.html of tutorial))
 - [ ] (Introduce zoom and pan for map)
+- [ ] Uganda Anomaly: 2021-08-19 to 2021-08-25 --> also on OWID
 - [x] add hover effects to scatter plot
 - [x] custom scaling of range depending on corrvar
 - [x] countries encoded wrongly
