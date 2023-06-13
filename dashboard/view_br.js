@@ -124,8 +124,8 @@ function hoverOn(event, d) {
 
     svg.append("text")
         .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right - 20)
-        .attr("y", event.clientY - h - 275)
+        .attr("x", event.clientX - w - x_padding_right + 300)
+        .attr("y", event.clientY - h - 265)
         .attr("class", "countryLabelVacc")
         .attr("opacity", 0)
         .transition().duration(100)

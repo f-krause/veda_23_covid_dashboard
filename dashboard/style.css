@@ -64,8 +64,15 @@ p{
 .column {
 	float: left;
 	flex: 1;
-	width: 50%;
 	position: relative;
+}
+
+#left_col{
+	width: 40%;
+}
+
+#right_col{
+	width: 60%;
 }
 
 .row {
@@ -87,7 +94,7 @@ p{
 
 .axisLabel {
 	text-anchor: middle;
-	font-size: 14px;
+	font-size: 15px;
 }
 
 
