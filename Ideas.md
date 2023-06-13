@@ -1,6 +1,7 @@
 # Ideas & Nodes
 
 ## TODOs
+- [ ] change numbers of mil to M
 - [ ] vertical slider to compare values
 - [ ] h2 text align issue
 - [ ] change file structure, one promise and call functions inside with loaded data (much more efficient)

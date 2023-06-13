@@ -51,7 +51,8 @@ let svg = d3.select("#right_row2")
                 .append("svg")
                 .attr("id", "br_svg")
                 .attr("width", w)
-                .attr("height", h);
+                .attr("height", h)
+                .attr("id", "br_svg");
 
 
 // Add x axis
@@ -118,18 +119,23 @@ svg.selectAll("text")
 
 // Hover effect functions
 function hoverOn(event, d) {
-    d3.select(this)
-        .transition().duration(70)
-        .attr("stroke-width", 4.5)
-
+    console.log(event)
+    // d3.select(this)
+    //     .transition().duration(70)
+    //     .attr("stroke-width", 4.5)
+    
+    cursorX = event.clientX - w
+    cursorY = event.clientY - h - 275
     svg.append("text")
         .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right - 35)
-        .attr("y", event.clientY - h - 275)
+        .attr("x", cursorX - x_padding_right - 35)
+        .attr("y", cursorY)
         .attr("class", "countryLabelVacc")
-        .attr("opacity", 0)
-        .transition().duration(100)
-        .attr("opacity", 1)
+        // .attr("opacity", 0)
+        // .transition().duration(100)
+        // .attr("opacity", 1)
+
+    plot_vert_line(cursorX, yScale.invert(cursorY))
 }
 
 function hoverOff(event, d) {
@@ -142,6 +148,9 @@ function hoverOff(event, d) {
     d3.select(this)
         .transition()
         .attr("stroke-width", 3)
+
+    d3.selectAll("#verticalLineUR").remove()
+    d3.selectAll("#verticalLineBR").remove()
 }
 
 

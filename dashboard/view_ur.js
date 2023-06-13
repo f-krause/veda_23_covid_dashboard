@@ -50,7 +50,8 @@ let svg = d3.select("#right_row1")
               .append("svg")
               .attr("id", "ur_svg")
               .attr("width", w)
-              .attr("height", h);
+              .attr("height", h)
+              .attr("id", "ur_svg");
 
 
 // Add x axis
@@ -116,31 +117,37 @@ svg.selectAll("text")
 
 // Hover effect functions
 function hoverOn(event, d) {
-    console.log(event)
-    d3.select(this)
-        .transition().duration(70)
-        .attr("stroke-width", 4.5)
-
+    // d3.select(this)
+    //     .transition().duration(70)
+    //     .attr("stroke-width", 4.5)
+    
+    cursorX = event.clientX - w
+    cursorY = event.clientY - 170
     svg.append("text")
-        .text(d[0])
-        .attr("x", event.clientX - w - x_padding_right - 35)
-        .attr("y", event.clientY - 170)
+        .text(d[0] + ": " + yScale.invert(cursorY).toFixed(2).toString())
+        .attr("x", cursorX - x_padding_right - 35)
+        .attr("y", cursorY)
         .attr("class", "countryLabelCases")
-        .attr("opacity", 0)
-        .transition().duration(100)
-        .attr("opacity", 1)
+        // .attr("opacity", 0)
+        // .transition().duration(100)
+        // .attr("opacity", 1)
+
+    plot_vert_line(cursorX, yScale.invert(cursorY))
 }
 
 function hoverOff(event, d) {
     d3.selectAll(".countryLabelCases")
-        .attr("opacity", 1)
-        .transition().duration(400)
-        .attr("opacity", 0)
+        // .attr("opacity", 1)
+        // .transition().duration(400)
+        // .attr("opacity", 0)
         .remove()
 
-    d3.select(this)
-        .transition()
-        .attr("stroke-width", 3)
+    // d3.select(this)
+    //     .transition()
+    //     .attr("stroke-width", 3)
+
+    d3.selectAll("#verticalLineUR").remove()
+    d3.selectAll("#verticalLineBR").remove()
 }
 
 
