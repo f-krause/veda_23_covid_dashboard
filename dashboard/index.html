@@ -9,25 +9,19 @@
 </head>
 
 <body>
-    <div class="banner">
+   <div class="banner">
         <h1>COVID-19 in Africa</h1>
         <p>Nov. 2020 to Oct. 2021</p>
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="column" id="left_row1">
+        <div class="column" id="left_col">
+            <div class="row" id="left_row1">
                 <h2>Total Cases</h2>
                 <button type="button" id="resetButton">Reset view</button> 
                 <script src="view_ul.js"></script>
             </div>
-            <div class="column" id="right_row1">
-                <h2>Timeline of New Cases (smoothed)</h2>
-                <script src="view_ur.js"></script>
-            </div>
-        </div>
-        <div class="row">
-            <div class="column" id="left_row2" align="center">
+            <div class="row" id="left_row2" align="center">
                 <h2 id="corr_header">Total Cases vs.
                     <select name="corr_variables" id="dropCorrVar" align="centre">
                         <option value="human_development_index">HDI</option>
@@ -39,17 +33,20 @@
                     </select>
                 </h2>
                 <script src="view_bl.js"></script>
-
             </div>
-            <div class="column" id="right_row2">
+        </div>
+
+        <div class="column" id="right_col">
+            <div class="row" id="right_row1">
+                <h2>Timeline of New Cases (smoothed)</h2>
+                <script src="view_ur.js"></script>
+            </div>
+            <div class="row" id="right_row2">
                 <h2>Timeline of New Vaccinations (smoothed)</h2>
-                <!-- <svg id="br_svg"></svg> -->
                 <script src="view_br.js"></script>
             </div>
         </div>
-          
-    </div>
-
+    </div>  
 
 
     <!-- <script src="vis.js"></script> -->

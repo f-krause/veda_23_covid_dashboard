@@ -4,8 +4,7 @@
 
 // Store values for svg creation
 const div = d3.select("#left_row1")
-// console.log(div._groups[0][0])
-const w = div._groups[0][0]["clientWidth"] / 2; // FIXME weird issue of wrong value
+const w = div._groups[0][0]["clientWidth"];
 const h = div._groups[0][0]["clientHeight"] - 70;
 // console.log(w)
 
