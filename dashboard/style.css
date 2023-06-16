@@ -28,6 +28,28 @@ h2{
     font-weight: bold
 }
 
+.countryLabelScatter{
+	background-color: #333333;
+	/* position: absolute; */
+	color: #F5F8FC;
+	border-radius: 2px;
+	/* top: 100px;
+	left: 100px; */
+	font-size: 15;
+	text-anchor: end;
+}
+
+.countryLabelVacc .countryLabelCases{
+	background-color: #333333;
+	position: relative;
+	color: #F5F8FC;
+	border-radius: 2px;
+	top: 100px;
+	left: 100px;
+	font-size: 15;
+	text-anchor: end;
+}
+
 p{
     margin: 0px;
 	font-size: 10px;

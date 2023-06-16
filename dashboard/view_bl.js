@@ -131,13 +131,11 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .style("stroke", "#0d5f6f")
             .style("stroke-width", 2)
         
-        svg.append("text") // TODO
-            .text(d["country"])
-            .attr("text-anchor", "end")
-            .attr("x", xScale(d["corr_var"]) - 12)
-            .attr("y", yScale(d["total_cases_per_million"]) + 5)
-            .attr("font-size", 15)
-            .attr("class", "countryLabelScatter")
+        d3.select(".countryLabelScatter")
+            .html(d["country"])
+            .attr("left", xScale(d["corr_var"]))
+            .attr("top", yScale(d["total_cases_per_million"]))
+            .style("visibility", "visible")    
             .attr("opacity", 0)
             .transition().duration(30)
             .attr("opacity", 1)
@@ -149,10 +147,10 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .transition().duration(200)
             .style("stroke-opacity", 0)
 
-        d3.selectAll(".countryLabelScatter")
-            .transition().duration(200)
-            .attr("opacity", 0)
-            .remove()
+        d3.select(".countryLabelScatter")
+            // .transition().duration(200)
+            .style("visibility", "hidden")    
+            // .attr("opacity", 0)
     }
     
 

@@ -129,7 +129,7 @@ function hoverOn(event, d) {
     svg.append("text")
         .text(d[0] + ": " + formatDecimal(yScale.invert(cursorY).toFixed(2)))
         .attr("text-anchor", "end")
-        .attr("x", cursorX - x_padding_right + 345)
+        .attr("x", cursorX - x_padding_right + 345) // TODO adapt css absolute
         .attr("y", cursorY)
         .attr("class", "countryLabelVacc")
         .attr("opacity", 0)
