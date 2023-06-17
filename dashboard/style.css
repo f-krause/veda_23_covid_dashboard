@@ -1,5 +1,5 @@
 /* Body */
-body{
+body {
     font-family: Helvetica, "Open Sans", sans-serif;
     margin-top: 12px;
     background-color: #F5F8FC; 
@@ -8,27 +8,27 @@ body{
 
 /* Text */
 /* TODO make dependent on min screen size*/
-h1{
+h1 {
 	font-size:36px;
 	padding: 0px;
     margin: 0px;
 	color: #F5F8FC;
 }
 
-h2{
+h2 {
 	padding: 0px;
     margin: 10px; 
 	font-size: 20px;
 	text-align: center;
 }
 
-.legendText{
+.legendText {
 	text-anchor: end;
     font-size: 15px;
     font-weight: bold
 }
 
-p{
+p {
     margin: 0px;
 	font-size: 10px;
 	color: #F5F8FC;
@@ -36,7 +36,7 @@ p{
 
 
 /* Dashboard banner */
-.banner{
+.banner {
 	padding: 5px;
 	margin: 6px;
     border-radius: 5px;
@@ -44,14 +44,14 @@ p{
     text-align: center;
 }
 
-.banner p{
+.banner p {
 	margin-bottom:0px;
 	font-size:23px;
 }
 
 
 /* Grid for plots */
-.container{
+.container {
     width: auto;
 	margin: 0px;
 }
@@ -67,11 +67,11 @@ p{
 	position: relative;
 }
 
-#left_col{
+#left_col {
 	width: 40%;
 }
 
-#right_col{
+#right_col {
 	width: 60%;
 }
 
@@ -99,7 +99,7 @@ p{
 
 
 /* Drop down menu & reset button */
-#dropCorrVar, #resetButton{
+#dropCorrVar, #resetButton {
 	font: inherit;
 	padding: 3px 8px;
 	border: 1px solid #ababab;
@@ -109,10 +109,13 @@ p{
 	cursor: pointer;
 }
 
-#resetButton{
+#resetButton {
 	/* font-size: 15px; */
 	font-weight: bold;
 	position: absolute;
+	padding: 7px;
+	padding-left: 11px;
+	padding-right: 11px;
 	top: 60px;
 	right: 30px;
 }

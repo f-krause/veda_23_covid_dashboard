@@ -52,6 +52,8 @@ let svg = d3.select("#right_row1")
               .attr("width", w)
               .attr("height", h);
 
+let diagram = svg.append("g").attr("transform", "translate(0,0)").attr("id", "diagram")
+
 
 // Add x axis
 const xScale = d3.scaleTime()
@@ -59,10 +61,10 @@ const xScale = d3.scaleTime()
                  .range([x_padding_left, w-x_padding_right]);
 
 const xAxis = d3.axisBottom(xScale)
-                .tickFormat(d3.timeFormat('%b %y'))
-                .ticks(d3.timeMonth.every(1));
+                .tickFormat(d3.timeFormat('%d %b %y'))
+                // .ticks(d3.timeMonth.every(1));
 
-svg.append("g")
+let axis = diagram.append("g")
     .attr("class", "axis")
     .attr("transform", "translate(0," + (h - y_padding) + ")")
     .call(xAxis)
@@ -82,6 +84,20 @@ svg.append("g")
     .call(yAxis);
 
 
+// BRUSHING
+let brush = d3.brushX()
+    .extent([
+        [x_padding_left, 3],
+        [w-x_padding_right, h] // first value, how much to the right // second value height
+    ])
+    .on("end", updateChart)
+
+d3.select("#diagram")
+    .append("g")
+    .attr("class", "brush")
+    .call(brush)
+
+
 // Plot lines
 let line = d3.line()
     .x(function(d) {
@@ -91,8 +107,7 @@ let line = d3.line()
         return yScale(d.cases);
     });
 
-svg.append("g")
-    .selectAll("path")
+svg.append("g").selectAll("path")
     .data(data_grouped)
     .join("path")
         .attr("stroke", d => sel_colors[d[0]])
@@ -148,6 +163,36 @@ function hoverOff(event, d) {
         .attr("stroke-width", 3)
 }
 
+
+// BRUSHING FUNCTIONS
+
+// A function that set idleTimeOut to null
+let idleTimeout
+
+function idled() {
+idleTimeout = null;
+}
+
+function updateChart(event) {
+let extent = event.selection
+console.log(extent)
+if (!extent) {
+    if (!idleTimeout) return idleTimeout = setTimeout(idled, 350); // This allows to wait a little bit
+    xScale.domain(d3.extent(data, function(d){return d.date}))
+} else {
+    console.log("HERE!")
+    xScale.domain([xScale.invert(extent[0]), xScale.invert(extent[1])]) //scale.invert scales the values back to the domain space
+    diagram.select(".brush").call(brush.move, null) // This: Remove the grey brush area as soon as the selection has been done
+}
+
+axis.transition().duration(1000).call(xAxis)
+
+diagram.selectAll("path")
+    .enter(data)
+    .transition().duration(1000)
+    // .attr("cx", d => xScale(d.cases))
+    .attr("d", d => line(d[1])) // d is null
+}
 
 // // Click effect functions
 // function clickOn(event, d) { 
