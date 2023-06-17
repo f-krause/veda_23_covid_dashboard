@@ -121,32 +121,53 @@ const locale = d3.formatLocale({decimal: ","})
 const formatDecimal = locale.format("$,")
 function hoverOn(event, d) {
     d3.select(this)
-        .transition().duration(70)
+        .transition().duration(50)
         .attr("stroke-width", 4.5)
 
-    cursorX = event.clientX - w
+    cursorX = event.clientX - w - x_padding_right + 345
     cursorY = event.clientY - h - 265
+    let labelText = d[0] + ": " + formatDecimal(yScale.invert(cursorY).toFixed(2))
+
+    svg.append("circle")
+        .attr('cx', event.clientX)
+        .attr('cy', event.clientY)
+        .attr('r', 5)
+        .style('fill', 'green')
+        .raise();
+
     svg.append("text")
-        .text(d[0] + ": " + formatDecimal(yScale.invert(cursorY).toFixed(2)))
+        .attr("class", "countryLabelLine")
+        .text(labelText)
         .attr("text-anchor", "end")
-        .attr("x", cursorX - x_padding_right + 345)
+        .attr("fill", "#F5F8FC")
+        .attr("x", cursorX)
         .attr("y", cursorY)
-        .attr("class", "countryLabelVacc")
+        .each(function(d) {
+            var bbox = this.getBBox()
+            svg.append("rect")
+                .attr("class", "rectBehindText")
+                .attr("x", bbox.x - 4)
+                .attr("y", bbox.y - 2) 
+                .attr("width", bbox.width + 8)
+                .attr("height", bbox.height + 4)
+                .attr("opacity", 0)
+                .transition().duration(70)
+                .attr("opacity", 0.6)
+        })
+        .raise()
         .attr("opacity", 0)
-        .transition().duration(100)
+        .transition().duration(50)
         .attr("opacity", 1)
 }
 
-
 function hoverOff(event, d) {
-    d3.selectAll(".countryLabelVacc")
-        .attr("opacity", 1)
-        .transition().duration(400)
+    d3.selectAll(".countryLabelLine, .rectBehindText")
+        .transition().duration(300)
         .attr("opacity", 0)
         .remove()
 
     d3.select(this)
-        .transition()
+        .transition(100)
         .attr("stroke-width", 3)
 }
 

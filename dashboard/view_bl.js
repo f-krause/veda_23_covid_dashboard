@@ -4,7 +4,7 @@
 
 // Change correlation variable on drop down change
 let corr_var = "human_development_index"
-let corr_var_clean = "HDI"
+let corr_var_clean = "Human Development Index"
 
 
 function plotScatterPlot(sel_countries, sel_colors) {
@@ -132,12 +132,26 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .style("stroke-width", 2)
         
         svg.append("text") // TODO
+            .attr("class", "countryLabelScatter")    
             .text(d["country"])
             .attr("text-anchor", "end")
-            .attr("x", xScale(d["corr_var"]) - 12)
+            .attr("fill", "#F5F8FC")
+            // .attr("font-size", 15)
+            .attr("x", xScale(d["corr_var"]) - 17)
             .attr("y", yScale(d["total_cases_per_million"]) + 5)
-            .attr("font-size", 15)
-            .attr("class", "countryLabelScatter")
+            .each(function(d) {
+                var bbox = this.getBBox()
+                svg.append("rect")
+                    .attr("class", "rectBehindText")
+                    .attr("x", bbox.x - 2)
+                    .attr("y", bbox.y - 2)
+                    .attr("width", bbox.width + 4)
+                    .attr("height", bbox.height + 4)
+                    .attr("opacity", 0)
+                    .transition().duration(30)
+                    .attr("opacity", 0.7)
+            })
+            .raise()
             .attr("opacity", 0)
             .transition().duration(30)
             .attr("opacity", 1)
@@ -146,11 +160,11 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     function hoverOff(event, d) {
         d3.select(this)
             // .lower()
-            .transition().duration(200)
+            .transition().duration(150)
             .style("stroke-opacity", 0)
 
-        d3.selectAll(".countryLabelScatter")
-            .transition().duration(200)
+        d3.selectAll(".countryLabelScatter, .rectBehindText")
+            .transition().duration(150)
             .attr("opacity", 0)
             .remove()
     }

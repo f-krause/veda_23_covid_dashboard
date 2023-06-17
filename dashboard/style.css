@@ -120,6 +120,18 @@ p {
 	right: 30px;
 }
 
+/* Hover labels */
+/* .countryLabelScatter .countryLabelLine {
+	color: #F5F8FC;
+	color: white;
+} */
+
+.rectBehindText {
+	fill: rgb(62, 61, 61);
+	/* opacity: 0.6; */
+	rx: 2px;
+}
+
 
 /* Zoom and pan */
 /* TODO https://blog.swwomm.com/2021/03/d3v6-pan-and-zoom.html */

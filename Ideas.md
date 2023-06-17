@@ -1,6 +1,7 @@
 # Ideas & Nodes
 
 ## TODOs
+- [ ] lint code!
 - [ ] vertical slider to compare values (disregarded)
 - [ ] change file structure, one promise and call functions inside with loaded data (much more efficient)
 - [ ] (introduce brushing/filter transition (d3_transitions.html of tutorial))
