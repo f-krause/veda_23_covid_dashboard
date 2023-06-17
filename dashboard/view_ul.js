@@ -55,7 +55,7 @@ function plotMap() {
 
     const color_scale = d3.scaleSymlog()
         .domain([minMax[0], minMax[1]])
-        .range([0.55, 0.15])
+        .range([0.6, 0.1])
 
 
     // Fill states according log total cases
@@ -106,15 +106,31 @@ function plotMap() {
         d3.selectAll(".countryLabelMap")
             .remove()
 
+        let cursorX = event.clientX
+        let cursorY = event.clientY - 170
+       
         svg.append("text")
-            .text(d["country"])
-            .attr("text-anchor", "end")
-            .attr("x", w - 25)
-            .attr("y", 95)
-            .attr("font-size", 15)
             .attr("class", "countryLabelMap")
+            .text(d["country"])
+            .attr("text-anchor", "middle")
+            .attr("fill", "#F5F8FC")
+            .attr("x", cursorX)
+            .attr("y", cursorY)
+            .each(function(d) {
+                var bbox = this.getBBox()
+                svg.append("rect")
+                    .attr("class", "rectBehindText")
+                    .attr("x", bbox.x - 4)
+                    .attr("y", bbox.y - 2) 
+                    .attr("width", bbox.width + 8)
+                    .attr("height", bbox.height + 4)
+                    .attr("opacity", 0)
+                    .transition().duration(70)
+                    .attr("opacity", 0.8)
+            })
+            .raise()
             .attr("opacity", 0)
-            .transition().duration(100)
+            .transition().duration(50)
             .attr("opacity", 1)
         }
 
@@ -125,6 +141,11 @@ function plotMap() {
                 .style("stroke-width", 1)
                 .style("stroke", "white")
         }
+
+        d3.selectAll(".countryLabelMap, .rectBehindText")
+            .transition().duration(30)
+            .attr("opacity", 0)
+            .remove()
     }
 
 
@@ -153,23 +174,6 @@ function plotMap() {
     // Add legend
     const yOffset = 160
     const legendData = [[yOffset, 0, "no data"], [yOffset + 20, 200, "200"], [yOffset + 40, 20_000, "20.000"], [yOffset+60, 200_000, "200.000"]]
-
-    svg.append("text")
-        .attr("y", yOffset - 90)
-        .attr("x", w - 25)
-        .attr("class", "legendText")
-        .text("Last country visited")
-
-    svg.append("text")
-        .text("Africa average")
-        .attr("text-anchor", "end")
-        .attr("x", w - 25)
-        .attr("y", 95)
-        .attr("font-size", 15)
-        .attr("class", "countryLabelMap")
-        .attr("opacity", 0)
-        .transition().duration(100)
-        .attr("opacity", 1)
 
     svg.append("text")
         .attr("class", "legendText")

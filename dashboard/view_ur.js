@@ -123,7 +123,7 @@ function hoverOn(event, d) {
         .transition().duration(50)
         .attr("stroke-width", 4.5)
     
-    let cursorX = event.clientX - w - x_padding_right + 345
+    let cursorX = event.clientX - w - x_padding_right + 345 // TODO subtract width of left div
     let cursorY = event.clientY - 165
     let labelText = d[0] + ": " + formatDecimal(yScale.invert(cursorY).toFixed(2))
 
