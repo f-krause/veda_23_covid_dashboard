@@ -109,7 +109,7 @@ function plotMap() {
         svg.append("text")
             .text(d["country"])
             .attr("text-anchor", "end")
-            .attr("x", w-25)
+            .attr("x", w - 25)
             .attr("y", 95)
             .attr("font-size", 15)
             .attr("class", "countryLabelMap")
@@ -119,7 +119,7 @@ function plotMap() {
         }
 
     function hoverOff(event, d) {
-        if (! sel_countries.includes(d["country"])) {
+        if (!sel_countries.includes(d["country"])) {
             d3.select(this)
                 .lower()
                 .style("stroke-width", 1)
@@ -152,18 +152,18 @@ function plotMap() {
 
     // Add legend
     const yOffset = 160
-    const legendData = [[yOffset, 0, "no data"], [yOffset+20, 200, "200"], [yOffset+40, 20_000, "20.000"], [yOffset+60, 200_000, "200.000"]]
+    const legendData = [[yOffset, 0, "no data"], [yOffset + 20, 200, "200"], [yOffset + 40, 20_000, "20.000"], [yOffset+60, 200_000, "200.000"]]
 
     svg.append("text")
-        .attr("y", yOffset-90)
-        .attr("x", w-25)
+        .attr("y", yOffset - 90)
+        .attr("x", w - 25)
         .attr("class", "legendText")
         .text("Last country visited")
 
     svg.append("text")
         .text("Africa average")
         .attr("text-anchor", "end")
-        .attr("x", w-25)
+        .attr("x", w - 25)
         .attr("y", 95)
         .attr("font-size", 15)
         .attr("class", "countryLabelMap")
@@ -173,8 +173,8 @@ function plotMap() {
 
     svg.append("text")
         .attr("class", "legendText")
-        .attr("y", yOffset-20)
-        .attr("x", w-25)
+        .attr("y", yOffset - 20)
+        .attr("x", w - 25)
         .text("Total cases (per mil.)")
 
     svg.append("g")
@@ -182,7 +182,7 @@ function plotMap() {
         .data(legendData)
         .enter()
         .append("rect")
-            .attr("x", w-130)
+            .attr("x", w - 130)
             .attr("y", d => d[0])
             .attr("width", 15)
             .attr("height", 15)
@@ -194,8 +194,8 @@ function plotMap() {
         .enter()
         .append("text")
             .attr("text-anchor", "end")
-            .attr("y", d => d[0]+11)
-            .attr("x", w-25)
+            .attr("y", d => d[0] + 11)
+            .attr("x", w - 25)
             .attr("font-size", 12)
             .text(d => d[2])
 }

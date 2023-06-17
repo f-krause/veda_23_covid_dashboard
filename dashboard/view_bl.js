@@ -189,7 +189,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         
     // Add legend of circle size
     const yOffset = h/2
-    const legendData = [[yOffset, 100_000], [yOffset+20, 10_000_000], [yOffset+40, 100_000_000]]
+    const legendData = [[yOffset, 100_000], [yOffset + 20, 10_000_000], [yOffset + 40, 100_000_000]]
 
     svg.append("g")
         .selectAll("circle")

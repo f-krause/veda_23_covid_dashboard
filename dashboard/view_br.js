@@ -71,7 +71,7 @@ svg.append("g")
 
 // Add y axis
 const yScale = d3.scaleLinear()
-                    .domain([0, d3.max(data.map(d => d.vacc))*1.05]) // increase max for aesthetics
+                    .domain([0, d3.max(data.map(d => d.vacc)) * 1.05]) // increase max for aesthetics
                     .range([h-y_padding, y_padding]);
 
 const yAxis = d3.axisLeft(yScale)
