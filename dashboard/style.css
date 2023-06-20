@@ -129,7 +129,7 @@ p {
 .rectBehindText {
 	fill: rgb(62, 61, 61);
 	/* opacity: 0.6; */
-	rx: 2px;
+	rx: 1px;
 }
 
 

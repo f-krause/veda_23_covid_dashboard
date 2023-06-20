@@ -9,7 +9,8 @@ const h = div._groups[0][0]["clientHeight"] - 70;
 
 // Initialize selections and colors
 var sel_countries = ["Africa"];
-const custom_colors = ["#e41a1c", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", "#af7aa1", "#7f7f7f", "#8c564b", "#31b831", "#ff9da7"]
+const custom_colors = ["#e41a1c", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", 
+    "#af7aa1", "#7f7f7f", "#8c564b", "#31b831", "#ff9da7"]
 console.log(custom_colors.length)
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
