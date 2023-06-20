@@ -7,7 +7,6 @@ body {
 
 
 /* Text */
-/* TODO make dependent on min screen size*/
 h1 {
 	font-size:36px;
 	padding: 0px;
@@ -110,7 +109,6 @@ p {
 }
 
 #resetButton {
-	/* font-size: 15px; */
 	font-weight: bold;
 	position: absolute;
 	padding: 7px;
@@ -120,49 +118,8 @@ p {
 	right: 30px;
 }
 
-/* Hover labels */
-/* .countryLabelScatter .countryLabelLine {
-	color: #F5F8FC;
-	color: white;
-} */
-
 .rectBehindText {
 	fill: rgb(62, 61, 61);
 	/* opacity: 0.6; */
 	rx: 1px;
 }
-
-
-/* Zoom and pan */
-/* TODO https://blog.swwomm.com/2021/03/d3v6-pan-and-zoom.html */
-/* .bg > rect {
-	cursor: move;
-  }
-  .bg.grabbing > rect {
-	cursor: grabbing;
-  }
-  .bg.scaling > rect {
-	cursor: zoom-in;
-  } */
-
-
-
-
-/* FOR DEBUGGING */
-/* #left_row1{
-	background-color: rgb(237, 203, 213);
-}
-
-#right_row1{
-	background-color: rgb(241, 222, 227);
-}
-
-#left_row2{
-	background-color: rgb(200, 214, 233);
-} 
-
-#right_row2{
-	background-color: rgb(222, 230, 241);
-} */
-
-

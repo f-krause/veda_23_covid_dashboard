@@ -7,11 +7,11 @@ const div = d3.select("#left_row1")
 const w = div._groups[0][0]["clientWidth"];
 const h = div._groups[0][0]["clientHeight"] - 70;
 
+
 // Initialize selections and colors
 var sel_countries = ["Africa"];
 const custom_colors = ["#e41a1c", "#9467bd", "#ff7f00", "#bcbd22", "#f781bf", "#e15759", "#b25f30", 
     "#af7aa1", "#7f7f7f", "#8c564b", "#31b831", "#ff9da7"]
-console.log(custom_colors.length)
 var colors_stack = custom_colors.reverse().slice();
 var sel_colors = {"Africa": "#0d5f6f"};
 
@@ -44,7 +44,6 @@ function plotMap() {
         .enter()
         .append("path")
             .attr("d", path) // Add the projection
-            // .style("stroke-alignment", "inner") // DELETE NOT WORKING
             .style("stroke", "white")
             .style("stroke-width", 1)
             .style("stroke-array", "100")
@@ -107,6 +106,7 @@ function plotMap() {
         d3.selectAll(".countryLabelMap")
             .remove()
 
+        // Add country name at curser position
         let cursorX = event.clientX
         let cursorY = event.clientY - 170
        
@@ -148,17 +148,6 @@ function plotMap() {
             .attr("opacity", 0)
             .remove()
     }
-
-
-    // Reset plotting when clicking on background html/svg
-    // d3.select("#left_row1")
-    //     .on("click", resetHelper)
-
-    // function resetHelper(event, d) {
-    //     if (event.target.id === "ul_svg" | event.target.id === "document") {
-    //         resetSelection()
-    //     }
-    // }
 
     d3.select("#resetButton")
         .on("click", resetSelection)
@@ -205,11 +194,11 @@ function plotMap() {
             .text(d => d[2])
 }
 
+
 // Call functions to plot map
 plotMap()
 updatePlots(sel_countries, sel_colors)
 })
-
 
 function updatePlots(sel_countries, sel_colors) {
     plotUpperLineChart(sel_countries, sel_colors)

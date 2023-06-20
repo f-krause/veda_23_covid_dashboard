@@ -11,6 +11,7 @@ function plotScatterPlot(sel_countries, sel_colors) {
 // Load data
 d3.csv("../data/scatter.csv").then(data => {
 
+
 // Store values for svg creation
 const div = d3.select("#left_row2")
 const w = div._groups[0][0]["clientWidth"] - 20;
@@ -65,7 +66,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
                     .range([x_padding_left, w - x_padding_right]);
 
     const xAxis = d3.axisBottom(xScale)
-                    .ticks(8).tickFormat(d => d.toLocaleString()) // TODO add spaces as separators
+                    .ticks(8).tickFormat(d => d.toLocaleString())
 
     svg.append("g")
         .attr("class", "axis")
@@ -79,8 +80,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .domain([100, yMinMax[1] * 1.1])
         .range([h - y_padding, y_padding]);
     
-        const yAxis = d3.axisLeft(yScale)
-        // .ticks(10)
+    const yAxis = d3.axisLeft(yScale)
         .tickValues([100, 1000, 10000, 50000])
         .tickFormat(d => d.toLocaleString())
 
@@ -95,6 +95,7 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
     const circleScaler = d3.scaleSqrt()
                             .domain([popMinMax[0], popMinMax[1]])
                             .range([3, 10])
+
 
     // Add data
     svg.append("g")
@@ -131,12 +132,11 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
             .style("stroke", "#0d5f6f")
             .style("stroke-width", 2)
         
-        svg.append("text") // TODO
+        svg.append("text")
             .attr("class", "countryLabelScatter")    
             .text(d["country"])
             .attr("text-anchor", "end")
             .attr("fill", "#F5F8FC")
-            // .attr("font-size", 15)
             .attr("x", xScale(d["corr_var"]) - 17)
             .attr("y", yScale(d["total_cases_per_million"]) + 5)
             .each(function(d) {
@@ -159,7 +159,6 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
 
     function hoverOff(event, d) {
         d3.select(this)
-            // .lower()
             .transition().duration(150)
             .style("stroke-opacity", 0)
 
@@ -207,7 +206,6 @@ function plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors) 
         .enter()
         .append("text")
             .attr("text-anchor", "end")
-            // .attr("alignment-baseline", "middle")
             .attr("y", d => d[0]+5)
             .attr("x", w-5)
             .attr("font-size", 12)
