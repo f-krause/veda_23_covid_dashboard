@@ -217,8 +217,8 @@ function plotScatterPlot(sel_countries, sel_colors) {
             .attr("x", w-5)
             .text("Population size")
             
-}
+    }
 
-plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors)
-})
+    plotScatterHelper(corr_var, corr_var_clean, sel_countries, sel_colors)
+    })
 }

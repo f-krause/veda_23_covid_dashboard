@@ -154,7 +154,7 @@ function plotUpperLineChart(sel_countries, sel_colors) {
 
     function hoverOff(event, d) {
         d3.selectAll(".countryLabelLine, .rectBehindText")
-            .transition().duration(300)
+            .transition().duration(100)
             .attr("opacity", 0)
             .remove()
 
