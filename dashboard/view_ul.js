@@ -34,6 +34,7 @@ function plotMap() {
                 .attr("width", w)
                 .attr("height", h);
 
+                
     // Plot map of US states using Albers projection
     let maparea = svg.append("g")
     const projection = d3.geoMercator().fitSize([3/4*w, h], geodata)
