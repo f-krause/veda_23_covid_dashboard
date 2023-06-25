@@ -11,3 +11,9 @@ The dashboard shows COVID-19 data from Nov. 2020 to Oct. 2022.
 - COVID Data: https://github.com/owid/covid-19-data/tree/master/public/data
 - In particular, used the full csv file from [here](https://covid.ourworldindata.org/data/owid-covid-data.csv).
 - Geodata from (but adapted to work with covid data): https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson
+
+
+</br>
+
+## The Dashboard
+![screenhot of dashboard](data/screenshot.jpg)
