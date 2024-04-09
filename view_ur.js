@@ -39,9 +39,9 @@ function plotUpperLineChart(sel_countries, sel_colors) {
     const div = d3.select("#right_row1")
     const w = div._groups[0][0]["clientWidth"] - 20;
     const h = div._groups[0][0]["clientHeight"] - 90;
-    const x_padding_left = 80;
-    const x_padding_right = 20;
-    const y_padding = 0;
+    const x_padding_left = 90;
+    const x_padding_right = 30;
+    const y_padding = 8;
 
 
     // remove existing plot

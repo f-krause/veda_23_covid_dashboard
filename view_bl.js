@@ -16,9 +16,9 @@ function plotScatterPlot(sel_countries, sel_colors) {
     const div = d3.select("#left_row2")
     const w = div._groups[0][0]["clientWidth"] - 20;
     const h = div._groups[0][0]["clientHeight"] - 90;
-    const x_padding_left = 85;
-    const x_padding_right = 140;
-    const y_padding = 20;
+    const x_padding_left = 95;
+    const x_padding_right = 150;
+    const y_padding = 30;
 
 
     // Update 
