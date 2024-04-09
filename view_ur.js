@@ -5,7 +5,7 @@
 
 function plotUpperLineChart(sel_countries, sel_colors) {
     // Load data
-    d3.csv("../data/cases.csv").then(data_raw => {
+    d3.csv("data/cases.csv").then(data_raw => {
 
 
     // Date converter

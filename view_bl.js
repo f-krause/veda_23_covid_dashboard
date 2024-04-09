@@ -9,7 +9,7 @@ let corr_var_clean = "Human Development Index"
 
 function plotScatterPlot(sel_countries, sel_colors) {
     // Load data
-    d3.csv("../data/scatter.csv").then(data => {
+    d3.csv("data/scatter.csv").then(data => {
 
 
     // Store values for svg creation

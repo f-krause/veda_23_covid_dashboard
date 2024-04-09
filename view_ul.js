@@ -18,8 +18,8 @@ var sel_colors = {"Africa": "#0d5f6f"};
 
 // Load data
 Promise.all([
-    d3.csv('../data/scatter.csv'),
-    d3.json('../data/geo_africa.json') // Geodata from: https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson
+    d3.csv('data/scatter.csv'),
+    d3.json('data/geo_africa.json') // Geodata from: https://raw.githubusercontent.com/codeforgermany/click_that_hood/master/public/data/africa.geojson
 ]).then(([data, geodata]) => {
 
 
