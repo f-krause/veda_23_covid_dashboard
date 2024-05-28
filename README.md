@@ -5,7 +5,7 @@ Repository for the last Assignment (A5) of the lecture "Visual and Exploratory D
 
 The dashboard shows COVID-19 data from Nov. 2020 to Oct. 2022.
 
-[LIVE DEMO]([url](https://f-krause.github.io/veda_23_covid_dashboard/))
+[LIVE DEMO](https://f-krause.github.io/veda_23_covid_dashboard/)
 
 </br> 
 
